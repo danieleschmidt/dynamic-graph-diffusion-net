@@ -1,0 +1,147 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug]: "
+labels: ["bug", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the information below to help us resolve the issue.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting your bug report
+      options:
+        - label: I have searched existing issues to ensure this hasn't been reported yet
+          required: true
+        - label: I have checked the documentation for relevant information
+          required: true
+        - label: I am using a supported version of Python (3.8+)
+          required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is
+      placeholder: Describe the bug...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Import the library...
+        2. Create a model with...
+        3. Call method...
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen
+      placeholder: Describe what you expected...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened
+      placeholder: Describe what happened instead...
+    validations:
+      required: true
+
+  - type: textarea
+    id: minimal-example
+    attributes:
+      label: Minimal Code Example
+      description: A minimal, complete code example that reproduces the issue
+      render: python
+      placeholder: |
+        import torch
+        from dgdn import DynamicGraphDiffusionNet
+        
+        # Your minimal example here
+    validations:
+      required: true
+
+  - type: textarea
+    id: error-traceback
+    attributes:
+      label: Error Message/Traceback
+      description: If applicable, copy and paste the full error message and traceback
+      render: shell
+      placeholder: Paste the full error message here...
+
+  - type: input
+    id: dgdn-version
+    attributes:
+      label: DGDN Version
+      description: What version of dynamic-graph-diffusion-net are you using?
+      placeholder: "0.1.0"
+    validations:
+      required: true
+
+  - type: input
+    id: python-version
+    attributes:
+      label: Python Version
+      description: What version of Python are you using?
+      placeholder: "3.9.0"
+    validations:
+      required: true
+
+  - type: input
+    id: pytorch-version
+    attributes:
+      label: PyTorch Version
+      description: What version of PyTorch are you using?
+      placeholder: "2.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: Operating System
+      description: What operating system are you using?
+      options:
+        - Linux
+        - macOS
+        - Windows
+        - Other (please specify in additional context)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: gpu-available
+    attributes:
+      label: GPU Available
+      description: Are you using GPU acceleration?
+      options:
+        - "Yes - CUDA"
+        - "Yes - MPS (Apple Silicon)"
+        - "No - CPU only"
+        - "Other"
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here
+      placeholder: |
+        - Hardware specifications
+        - Other relevant libraries and versions
+        - Any additional information that might be helpful

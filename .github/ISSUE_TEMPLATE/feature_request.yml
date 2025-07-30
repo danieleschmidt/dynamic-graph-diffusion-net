@@ -1,0 +1,124 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement", "feature-request"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please provide as much detail as possible to help us understand your request.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting your feature request
+      options:
+        - label: I have searched existing issues to ensure this hasn't been requested yet
+          required: true
+        - label: I have checked the roadmap to see if this is already planned
+          required: true
+
+  - type: textarea
+    id: feature-summary
+    attributes:
+      label: Feature Summary
+      description: A brief, clear summary of the feature you'd like to see
+      placeholder: "Add support for..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation and Use Case
+      description: Why would this feature be useful? What problem does it solve?
+      placeholder: |
+        Describe your use case and why this feature would be valuable:
+        - What are you trying to accomplish?
+        - What limitations are you facing with current functionality?
+        - How would this feature improve your workflow?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: How do you envision this feature working?
+      placeholder: |
+        Describe your proposed solution:
+        - What would the API look like?
+        - How should it integrate with existing functionality?
+        - Any specific implementation ideas?
+
+  - type: textarea
+    id: code-example
+    attributes:
+      label: Example Usage
+      description: Show how you would like to use this feature
+      render: python
+      placeholder: |
+        # Example of how the feature might be used
+        from dgdn import YourNewFeature
+        
+        feature = YourNewFeature(param1="value")
+        result = feature.method()
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Are there alternative solutions or workarounds you've considered?
+      placeholder: |
+        - Alternative approach 1: ...
+        - Alternative approach 2: ...
+        - Current workaround: ...
+
+  - type: dropdown
+    id: feature-type
+    attributes:
+      label: Feature Type
+      description: What type of feature is this?
+      options:
+        - New model architecture
+        - New dataset support
+        - Performance optimization
+        - API enhancement
+        - Visualization tool
+        - Documentation improvement
+        - Developer tooling
+        - Other
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would be helpful
+        - High - Important for my work
+        - Critical - Blocking my progress
+
+  - type: checkboxes
+    id: implementation
+    attributes:
+      label: Implementation
+      description: Are you willing to help implement this feature?
+      options:
+        - label: I would be willing to implement this feature myself
+        - label: I would be willing to help with testing and feedback
+        - label: I would be willing to help with documentation
+        - label: I can provide domain expertise or guidance
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or references about the feature request
+      placeholder: |
+        - Links to relevant papers or resources
+        - Similar implementations in other libraries
+        - Any additional technical details
