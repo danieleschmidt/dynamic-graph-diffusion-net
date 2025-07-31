@@ -1,19 +1,22 @@
-"""Dynamic Graph Diffusion Network (DGDN) library.
+"""Dynamic Graph Diffusion Net (DGDN) - PyTorch Implementation.
 
-A PyTorch implementation of the dynamic graph diffusion architecture
-for temporal graph neural networks.
+A PyTorch library implementing the Dynamic Graph Diffusion Network architecture
+for temporal graph learning, as proposed in the ICLR 2025 paper.
 """
 
 __version__ = "0.1.0"
 __author__ = "Daniel Schmidt"
 __email__ = "author@example.com"
+__license__ = "MIT"
 
-# Core components will be imported here when implemented
+# Core imports will be added as modules are implemented
 # from .models import DynamicGraphDiffusionNet
 # from .data import TemporalData, TemporalDataset
-# from .trainer import DGDNTrainer
+# from .modules import EdgeTimeEncoder, VariationalDiffusion
 
 __all__ = [
     "__version__",
-    # Add public API components here
+    "__author__",
+    "__email__",
+    "__license__",
 ]

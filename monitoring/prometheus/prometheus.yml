@@ -1,0 +1,46 @@
+# Prometheus configuration for DGDN monitoring
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # DGDN application metrics
+  - job_name: 'dgdn-app'
+    static_configs:
+      - targets: ['localhost:8000']
+    metrics_path: /metrics
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # Training metrics
+  - job_name: 'dgdn-training'
+    static_configs:
+      - targets: ['localhost:8001']
+    metrics_path: /training/metrics
+    scrape_interval: 30s
+
+  # GPU metrics (if available)
+  - job_name: 'nvidia-gpu'
+    static_configs:
+      - targets: ['localhost:9445']
+    scrape_interval: 10s
+
+  # System metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+
+  # Container metrics
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['localhost:8080']

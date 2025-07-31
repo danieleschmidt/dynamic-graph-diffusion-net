@@ -1,0 +1,149 @@
+# Docker Compose for Dynamic Graph Diffusion Net Development
+
+version: '3.8'
+
+services:
+  # Development environment
+  dgdn-dev:
+    build:
+      context: .
+      target: development
+      args:
+        CUDA_VERSION: 11.8
+        UBUNTU_VERSION: 20.04
+    image: dgdn:dev
+    container_name: dgdn-development
+    volumes:
+      - .:/app
+      - dgdn-cache:/root/.cache
+    ports:
+      - "8888:8888"  # Jupyter
+      - "6006:6006"  # TensorBoard
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: >
+      bash -c "
+        echo 'Starting DGDN development environment...' &&
+        jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
+      "
+
+  # Production environment
+  dgdn-prod:
+    build:
+      context: .
+      target: production
+    image: dgdn:latest
+    container_name: dgdn-production
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # CPU-only environment
+  dgdn-cpu:
+    build:
+      context: .
+      target: cpu-only
+    image: dgdn:cpu
+    container_name: dgdn-cpu-only
+    volumes:
+      - .:/app
+    ports:
+      - "8889:8888"
+    command: >
+      bash -c "
+        pip install jupyter &&
+        jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
+      "
+
+  # Testing environment
+  dgdn-test:
+    build:
+      context: .
+      target: development
+    image: dgdn:test
+    container_name: dgdn-testing
+    volumes:
+      - .:/app
+      - dgdn-test-cache:/root/.cache
+    command: >
+      bash -c "
+        echo 'Running comprehensive tests...' &&
+        make test-cov &&
+        echo 'Tests completed successfully!'
+      "
+
+  # Benchmark environment
+  dgdn-benchmark:
+    build:
+      context: .
+      target: production
+    image: dgdn:benchmark
+    container_name: dgdn-benchmarking
+    volumes:
+      - ./benchmarks:/app/benchmarks
+      - dgdn-benchmark-results:/app/results
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: >
+      bash -c "
+        echo 'Running performance benchmarks...' &&
+        python -m pytest benchmarks/ --benchmark-json=results/benchmark.json &&
+        echo 'Benchmarks completed!'
+      "
+
+  # Documentation server
+  docs:
+    build:
+      context: .
+      target: development
+    image: dgdn:docs
+    container_name: dgdn-docs
+    volumes:
+      - .:/app
+      - docs-build:/app/docs/_build
+    ports:
+      - "8000:8000"
+    working_dir: /app/docs
+    command: >
+      bash -c "
+        pip install sphinx sphinx-rtd-theme myst-parser &&
+        make html &&
+        cd _build/html &&
+        python -m http.server 8000
+      "
+
+volumes:
+  dgdn-cache:
+    driver: local
+  dgdn-test-cache:
+    driver: local
+  dgdn-benchmark-results:
+    driver: local
+  docs-build:
+    driver: local
+
+networks:
+  default:
+    name: dgdn-network
