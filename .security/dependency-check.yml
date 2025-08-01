@@ -1,0 +1,132 @@
+# Dependency Security Configuration
+# This file configures automated dependency vulnerability scanning
+
+# Safety configuration for Python dependency scanning
+safety:
+  scan_frequency: "daily"
+  fail_on_vulnerability: true
+  severity_threshold: "medium"  # low, medium, high, critical
+  ignore_vulnerabilities: []
+  
+  # Paths to scan
+  scan_paths:
+    - "src/"
+    - "tests/"
+  
+  # Output configuration
+  output_format: "json"
+  save_results: true
+  results_path: ".security/reports/"
+
+# pip-audit configuration
+pip_audit:
+  enabled: true
+  format: "json"
+  output_file: ".security/reports/pip-audit-report.json"
+  
+  # Vulnerability databases to check
+  vulnerability_databases:
+    - "pypi"
+    - "osv"
+  
+  # Ignore specific vulnerabilities (use with caution)
+  ignore_vulns: []
+
+# Bandit security linting configuration
+bandit:
+  enabled: true
+  config_file: ".security/bandit.yml"
+  
+  # Tests to skip (use with caution)
+  skip_tests: []
+  
+  # Confidence levels: low, medium, high
+  confidence_threshold: "medium"
+  
+  # Severity levels: low, medium, high
+  severity_threshold: "medium"
+
+# Semgrep static analysis security tool
+semgrep:
+  enabled: true
+  rulesets:
+    - "python"
+    - "security-audit"
+    - "secrets"
+    - "owasp-top-ten"
+  
+  # Custom rules directory
+  custom_rules_dir: ".security/semgrep-rules/"
+  
+  # Paths to scan
+  scan_paths:
+    - "src/"
+    - "tests/"
+  
+  # Paths to exclude
+  exclude_paths:
+    - "*.pyc"
+    - "__pycache__/"
+    - ".git/"
+
+# License compliance checking
+license_check:
+  enabled: true
+  allowed_licenses:
+    - "MIT"
+    - "Apache-2.0"
+    - "BSD-3-Clause"
+    - "BSD-2-Clause"
+    - "ISC"
+    - "GPL-3.0"  # Review carefully
+  
+  # Licenses to flag for review
+  review_required:
+    - "GPL-3.0"
+    - "AGPL-3.0"
+    - "LGPL-2.1"
+
+# Automated remediation
+auto_remediation:
+  enabled: false  # Enable with caution
+  
+  # Auto-update minor version security patches
+  auto_update_minor: false
+  
+  # Create PRs for security updates
+  create_security_prs: true
+  
+  # Notification settings
+  notify_security_team: true
+
+# Reporting and notifications
+reporting:
+  generate_daily_reports: true
+  generate_weekly_summaries: true
+  
+  # Report formats
+  formats:
+    - "json"
+    - "html"
+    - "markdown"
+  
+  # Storage locations
+  report_directory: ".security/reports/"
+  
+  # Retention policy
+  retain_reports_days: 90
+
+# Integration settings
+integrations:
+  # GitHub Security Advisories
+  github_security_advisories: true
+  
+  # Slack notifications
+  slack_webhook: null
+  
+  # Monitoring integration
+  prometheus_metrics: true
+  
+  # SIEM integration
+  siem_enabled: false
+  siem_endpoint: null
