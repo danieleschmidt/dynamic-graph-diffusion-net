@@ -1,0 +1,161 @@
+# Terragon Autonomous SDLC Configuration
+# This file configures the value discovery and scoring system
+
+# Repository metadata
+repository:
+  name: "Dynamic Graph Diffusion Net"
+  type: "ML/PyTorch Library"
+  maturity_level: "maturing"  # nascent, developing, maturing, advanced
+  primary_language: "python"
+  frameworks: ["pytorch", "torch-geometric"]
+
+# Value scoring configuration
+scoring:
+  weights:
+    # Weights based on repository maturity level (maturing: 50-75%)
+    wsjf: 0.6          # Weighted Shortest Job First
+    ice: 0.1           # Impact, Confidence, Ease
+    technical_debt: 0.2 # Technical debt reduction value
+    security: 0.1      # Security improvement bonus
+
+  thresholds:
+    min_composite_score: 15.0
+    max_risk_tolerance: 0.8
+    security_priority_boost: 2.0
+    compliance_urgency_boost: 1.8
+    dependency_update_penalty: 0.8
+    documentation_penalty: 0.6
+
+  # WSJF component weights
+  wsjf_components:
+    user_business_value: 0.3
+    time_criticality: 0.25
+    risk_reduction: 0.25
+    opportunity_enablement: 0.2
+
+# Discovery sources and tools
+discovery:
+  sources:
+    - git_history
+    - static_analysis
+    - issue_trackers
+    - vulnerability_databases
+    - performance_monitoring
+    - dependency_tracking
+
+  static_analysis:
+    tools:
+      - ruff
+      - mypy
+      - bandit  # Security linting
+      - vulture  # Dead code detection
+    
+  security_scanning:
+    tools:
+      - safety  # Python dependency vulnerabilities
+      - pip-audit  # PyPI package audit
+      - semgrep  # Static analysis security tool
+    
+  performance_monitoring:
+    tools:
+      - py-spy  # Python profiler
+      - memory-profiler
+      - pytest-benchmark
+
+# Task execution configuration
+execution:
+  max_concurrent_tasks: 1
+  default_branch: "main"
+  feature_branch_prefix: "auto-value/"
+  
+  test_requirements:
+    min_coverage_threshold: 80
+    max_performance_regression: 5  # percent
+    required_checks:
+      - unit_tests
+      - integration_tests
+      - linting
+      - type_checking
+      - security_scan
+  
+  rollback_triggers:
+    - test_failure
+    - build_failure
+    - security_violation
+    - coverage_drop_threshold: 10  # percent
+
+# Value tracking metrics
+metrics:
+  track_velocity: true
+  track_cycle_time: true
+  track_value_delivered: true
+  track_technical_debt_reduction: true
+  track_security_improvements: true
+  
+  reporting:
+    backlog_update_frequency: "hourly"
+    metrics_retention_days: 365
+    generate_weekly_reports: true
+
+# Integration settings
+integrations:
+  github:
+    enabled: true
+    pr_labels:
+      - "autonomous"
+      - "value-driven"
+    auto_assign_reviewers: true
+    
+  monitoring:
+    prometheus_metrics: true
+    grafana_dashboards: true
+    
+  notifications:
+    slack_webhook: null  # Set if using Slack notifications
+    email_alerts: false
+
+# Learning and adaptation
+learning:
+  enable_ml_scoring: true
+  feedback_learning: true
+  pattern_recognition: true
+  effort_estimation_learning: true
+  
+  model_update_frequency: "weekly"
+  learning_retention_days: 180
+
+# Security and compliance
+security:
+  enable_security_first_prioritization: true
+  auto_update_critical_vulnerabilities: true
+  compliance_frameworks:
+    - "OWASP"
+    - "NIST"
+  
+  sensitive_patterns:
+    - "TODO.*security"
+    - "FIXME.*vulnerability"
+    - "XXX.*auth"
+    - "HACK.*password"
+
+# Custom value definitions for this project
+custom_value_items:
+  ml_model_optimization:
+    category: "performance"
+    base_score: 25
+    effort_multiplier: 1.5
+    
+  documentation_completeness:
+    category: "maintenance" 
+    base_score: 10
+    effort_multiplier: 0.8
+    
+  benchmark_improvements:
+    category: "performance"
+    base_score: 30
+    effort_multiplier: 2.0
+    
+  api_stability:
+    category: "reliability"
+    base_score: 35
+    effort_multiplier: 1.2

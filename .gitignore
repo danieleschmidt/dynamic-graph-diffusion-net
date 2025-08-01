@@ -205,3 +205,33 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# ML/Data Science specific
+*.pth
+*.pkl
+*.pt
+*.h5
+*.hdf5
+*.npz
+model_weights/
+checkpoints/
+data/
+datasets/
+wandb/
+mlruns/
+.mlflow/
+experiments/outputs/
+results/
+artifacts/
+
+# Performance profiling
+*.prof
+.profiling/
+
+# Monitoring data
+grafana/data/
+prometheus/data/
+
+# Terragon value tracking
+.terragon/cache/
+.terragon/logs/

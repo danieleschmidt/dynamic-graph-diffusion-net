@@ -1,0 +1,55 @@
+{
+  "repository_info": {
+    "name": "Dynamic Graph Diffusion Net",
+    "maturity_level": "maturing",
+    "assessment_date": "2025-08-01T00:00:00Z",
+    "maturity_score": 65
+  },
+  "execution_history": [],
+  "backlog_metrics": {
+    "total_items": 0,
+    "high_priority_items": 0,
+    "medium_priority_items": 0,
+    "low_priority_items": 0,
+    "average_age_days": 0,
+    "technical_debt_ratio": 0.15,
+    "velocity_trend": "stable"
+  },
+  "value_delivery_metrics": {
+    "total_value_delivered": 0,
+    "items_completed_this_week": 0,
+    "items_completed_this_month": 0,
+    "average_cycle_time_hours": 0,
+    "success_rate": 1.0,
+    "rollback_rate": 0.0
+  },
+  "quality_metrics": {
+    "technical_debt_reduced_percent": 0,
+    "security_improvements": 0,
+    "performance_gains_percent": 0,
+    "code_coverage_improvement": 0,
+    "documentation_completeness": 75
+  },
+  "learning_metrics": {
+    "effort_estimation_accuracy": 0.8,
+    "value_prediction_accuracy": 0.7,
+    "pattern_recognition_hits": 0,
+    "false_positive_rate": 0.1,
+    "adaptation_cycles": 0
+  },
+  "discovery_stats": {
+    "sources": {
+      "static_analysis": 0,
+      "git_history": 0,
+      "issue_tracker": 0,
+      "vulnerability_scans": 0,
+      "performance_monitoring": 0,
+      "manual_discovery": 0
+    },
+    "items_discovered_today": 0,
+    "items_discovered_this_week": 0,
+    "discovery_rate_per_day": 0
+  },
+  "last_updated": "2025-08-01T00:00:00Z",
+  "next_discovery_run": "2025-08-01T01:00:00Z"
+}

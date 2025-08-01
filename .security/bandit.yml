@@ -1,0 +1,123 @@
+# Bandit Security Linting Configuration
+# https://bandit.readthedocs.io/en/latest/config.html
+
+# Test selection
+tests:
+  - B101  # Test for use of assert
+  - B102  # Test for exec used
+  - B103  # Test for set_bad_file_permissions
+  - B104  # Test for hardcoded_bind_all_interfaces
+  - B105  # Test for hardcoded_password_string
+  - B106  # Test for hardcoded_password_funcarg
+  - B107  # Test for hardcoded_password_default
+  - B108  # Test for hardcoded_tmp_directory
+  - B110  # Test for try_except_pass
+  - B112  # Test for try_except_continue
+  - B201  # Test for flask_debug_true
+  - B301  # Test for pickle usage
+  - B302  # Test for marshal usage
+  - B303  # Test for MD5 usage
+  - B304  # Test for DES usage
+  - B305  # Test for cipher usage
+  - B306  # Test for mktemp_q usage
+  - B307  # Test for eval usage
+  - B308  # Test for mark_safe usage
+  - B309  # Test for httpsconnection
+  - B310  # Test for urllib_urlopen
+  - B311  # Test for random usage
+  - B312  # Test for telnetlib usage
+  - B313  # Test for xml_bad_cElementTree
+  - B314  # Test for xml_bad_ElementTree
+  - B315  # Test for xml_bad_expatreader
+  - B316  # Test for xml_bad_expatbuilder
+  - B317  # Test for xml_bad_sax
+  - B318  # Test for xml_bad_minidom
+  - B319  # Test for xml_bad_pulldom
+  - B320  # Test for xml_bad_etree
+  - B321  # Test for ftplib usage
+  - B322  # Test for input usage
+  - B323  # Test for unverified_context
+  - B324  # Test for hashlib_new_insecure_functions
+  - B325  # Test for tempnam usage
+  - B401  # Test for import of telnetlib
+  - B402  # Test for import of ftplib
+  - B403  # Test for import of pickle
+  - B404  # Test for import of subprocess
+  - B405  # Test for import of xml_etree
+  - B406  # Test for import of xml_sax
+  - B407  # Test for import of xml_expat
+  - B408  # Test for import of xml_minidom
+  - B409  # Test for import of xml_pulldom
+  - B410  # Test for import of lxml
+  - B411  # Test for import of xmlrpclib
+  - B412  # Test for import of httpoxy
+  - B413  # Test for import of pycrypto
+  - B501  # Test for request_with_no_cert_validation
+  - B502  # Test for ssl_with_bad_version
+  - B503  # Test for ssl_with_bad_defaults
+  - B504  # Test for ssl_with_no_version
+  - B505  # Test for weak_cryptographic_key
+  - B506  # Test for yaml_load
+  - B507  # Test for ssh_no_host_key_verification
+  - B601  # Test for paramiko_calls
+  - B602  # Test for subprocess_popen_with_shell_equals_true
+  - B603  # Test for subprocess_without_shell_equals_true
+  - B604  # Test for any_other_function_with_shell_equals_true
+  - B605  # Test for start_process_with_a_shell
+  - B606  # Test for start_process_with_no_shell
+  - B607  # Test for start_process_with_partial_path
+  - B608  # Test for hardcoded_sql_expressions
+  - B609  # Test for linux_commands_wildcard_injection
+  - B610  # Test for django_extra_used
+  - B611  # Test for django_rawsql_used
+  - B701  # Test for jinja2_autoescape_false
+  - B702  # Test for use_of_mako_templates
+  - B703  # Test for django_mark_safe
+
+# Skip specific tests (use with caution)
+skips:
+  # Skip assert usage in tests (common in pytest)
+  - B101
+
+# Exclude paths
+exclude_dirs:
+  - '/tests'  # Uncomment to skip security checks in tests
+  - '/.venv'
+  - '/venv'
+  - '/env'
+
+# Severity and confidence levels
+# Possible values: LOW, MEDIUM, HIGH
+assert_used:
+  skips: ['*/test_*.py', '*/tests.py']
+  message: "Use of assert detected. Consider using proper exception handling in production code."
+
+# Custom patterns for ML/AI projects
+ml_security_patterns:
+  # Pickle security warnings
+  pickle_usage:
+    severity: HIGH
+    confidence: HIGH
+    message: "Pickle usage detected. Ensure data source is trusted to prevent code injection."
+  
+  # Model loading security
+  model_loading:
+    pattern: "torch.load|joblib.load|pickle.load"
+    severity: MEDIUM
+    confidence: MEDIUM
+    message: "Model loading detected. Verify model source integrity."
+
+# Framework-specific configurations
+frameworks:
+  django:
+    enabled: false
+  flask:
+    enabled: false
+  fastapi:
+    enabled: false
+  pytorch:
+    enabled: true
+    custom_checks:
+      - "torch.load"
+      - "torch.save"
+      - "torch.jit.load"
