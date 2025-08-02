@@ -1,0 +1,229 @@
+{
+  "project": {
+    "name": "Dynamic Graph Diffusion Net (DGDN)",
+    "version": "1.0.0",
+    "description": "Advanced variational diffusion model for dynamic graph neural networks",
+    "repository": "danieleschmidt/dynamic-graph-diffusion-net",
+    "license": "Apache-2.0",
+    "created_at": "2024-01-01T00:00:00Z",
+    "last_updated": "2024-01-15T00:00:00Z"
+  },
+  "metrics": {
+    "code_quality": {
+      "test_coverage": {
+        "target": 90,
+        "current": 0,
+        "unit": "percentage",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "code_complexity": {
+        "target": 10,
+        "current": 0,
+        "unit": "cyclomatic_complexity",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "documentation_coverage": {
+        "target": 95,
+        "current": 0,
+        "unit": "percentage",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "linting_violations": {
+        "target": 0,
+        "current": 0,
+        "unit": "count",
+        "trend": "stable",
+        "last_measured": null
+      }
+    },
+    "performance": {
+      "training_speed": {
+        "target": 1000,
+        "current": 0,
+        "unit": "samples_per_second",
+        "trend": "improving",
+        "last_measured": null
+      },
+      "inference_latency": {
+        "target": 50,
+        "current": 0,
+        "unit": "milliseconds",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "memory_usage": {
+        "target": 8,
+        "current": 0,
+        "unit": "gigabytes",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "model_accuracy": {
+        "target": 95,
+        "current": 0,
+        "unit": "percentage",
+        "trend": "improving",
+        "last_measured": null
+      }
+    },
+    "development": {
+      "build_time": {
+        "target": 300,
+        "current": 0,
+        "unit": "seconds",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "test_execution_time": {
+        "target": 120,
+        "current": 0,
+        "unit": "seconds",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "deployment_time": {
+        "target": 600,
+        "current": 0,
+        "unit": "seconds",
+        "trend": "stable",
+        "last_measured": null
+      }
+    },
+    "repository": {
+      "commit_frequency": {
+        "target": 5,
+        "current": 0,
+        "unit": "commits_per_week",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "pr_merge_time": {
+        "target": 24,
+        "current": 0,
+        "unit": "hours",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "issue_resolution_time": {
+        "target": 72,
+        "current": 0,
+        "unit": "hours",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "active_contributors": {
+        "target": 5,
+        "current": 1,
+        "unit": "count",
+        "trend": "growing",
+        "last_measured": "2024-01-15T00:00:00Z"
+      }
+    },
+    "security": {
+      "vulnerability_count": {
+        "target": 0,
+        "current": 0,
+        "unit": "count",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "dependency_freshness": {
+        "target": 30,
+        "current": 0,
+        "unit": "days_since_update",
+        "trend": "stable",
+        "last_measured": null
+      },
+      "security_scan_frequency": {
+        "target": 1,
+        "current": 0,
+        "unit": "scans_per_day",
+        "trend": "stable",
+        "last_measured": null
+      }
+    }
+  },
+  "thresholds": {
+    "red": {
+      "test_coverage": 70,
+      "performance_regression": 20,
+      "build_failure_rate": 10,
+      "vulnerability_count": 1
+    },
+    "yellow": {
+      "test_coverage": 80,
+      "performance_regression": 10,
+      "build_failure_rate": 5,
+      "vulnerability_count": 0
+    },
+    "green": {
+      "test_coverage": 90,
+      "performance_regression": 0,
+      "build_failure_rate": 0,
+      "vulnerability_count": 0
+    }
+  },
+  "alerts": {
+    "enabled": true,
+    "channels": ["github_issues", "email"],
+    "rules": [
+      {
+        "name": "Low Test Coverage",
+        "condition": "test_coverage < 80",
+        "severity": "warning",
+        "action": "create_issue"
+      },
+      {
+        "name": "Performance Regression",
+        "condition": "performance_regression > 15",
+        "severity": "critical",
+        "action": "create_issue"
+      },
+      {
+        "name": "High Vulnerability Count",
+        "condition": "vulnerability_count > 0",
+        "severity": "critical",
+        "action": "create_issue"
+      },
+      {
+        "name": "Build Failure Rate High",
+        "condition": "build_failure_rate > 5",
+        "severity": "warning",
+        "action": "create_issue"
+      }
+    ]
+  },
+  "reporting": {
+    "frequency": "weekly",
+    "format": ["json", "markdown", "html"],
+    "recipients": ["maintainers", "stakeholders"],
+    "include_trends": true,
+    "include_comparisons": true
+  },
+  "integrations": {
+    "github_actions": {
+      "enabled": true,
+      "webhook_url": null
+    },
+    "prometheus": {
+      "enabled": true,
+      "endpoint": "http://localhost:9090"
+    },
+    "codecov": {
+      "enabled": false,
+      "token": null
+    },
+    "sonarqube": {
+      "enabled": false,
+      "project_key": null
+    }
+  },
+  "metadata": {
+    "schema_version": "1.0",
+    "last_updated": "2024-01-15T00:00:00Z",
+    "updated_by": "automated_metrics_system"
+  }
+}

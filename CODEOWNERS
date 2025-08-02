@@ -1,0 +1,72 @@
+# CODEOWNERS file for Dynamic Graph Diffusion Net (DGDN)
+# This file defines who is responsible for different parts of the codebase
+# and will automatically assign reviewers for pull requests
+
+# Global ownership (applies to everything unless overridden)
+* @danieleschmidt
+
+# Core source code
+/src/ @danieleschmidt
+/src/dgdn/ @danieleschmidt
+
+# Model implementations and algorithms
+/src/dgdn/models/ @danieleschmidt
+/src/dgdn/diffusion/ @danieleschmidt
+/src/dgdn/variational/ @danieleschmidt
+
+# Tests and testing infrastructure
+/tests/ @danieleschmidt
+/benchmarks/ @danieleschmidt
+
+# Documentation and specifications
+/docs/ @danieleschmidt
+/README.md @danieleschmidt
+/ARCHITECTURE.md @danieleschmidt
+/PROJECT_CHARTER.md @danieleschmidt
+
+# Configuration and build files
+/pyproject.toml @danieleschmidt
+/Dockerfile @danieleschmidt
+/docker-compose.yml @danieleschmidt
+/Makefile @danieleschmidt
+
+# CI/CD and automation
+/.github/ @danieleschmidt
+/scripts/ @danieleschmidt
+
+# Monitoring and observability
+/monitoring/ @danieleschmidt
+
+# Security and compliance
+/SECURITY.md @danieleschmidt
+/LICENSE @danieleschmidt
+
+# Development environment
+/.devcontainer/ @danieleschmidt
+/.vscode/ @danieleschmidt
+/.editorconfig @danieleschmidt
+/.gitignore @danieleschmidt
+
+# Python configuration
+/mypy.ini @danieleschmidt
+/.pre-commit-config.yaml @danieleschmidt
+
+# Dependency management
+/requirements*.txt @danieleschmidt
+
+# Special files that require extra attention
+/CHANGELOG.md @danieleschmidt
+/CONTRIBUTING.md @danieleschmidt
+/CODE_OF_CONDUCT.md @danieleschmidt
+
+# Auto-assign for specific file types (optional reviewers)
+*.py @danieleschmidt
+*.yml @danieleschmidt
+*.yaml @danieleschmidt
+*.toml @danieleschmidt
+*.md @danieleschmidt
+
+# Research and experimental code
+/experiments/ @danieleschmidt
+/research/ @danieleschmidt
+/notebooks/ @danieleschmidt
