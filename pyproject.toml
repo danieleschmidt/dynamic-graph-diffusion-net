@@ -41,11 +41,20 @@ dependencies = [
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
+    "pytest-xdist>=3.0.0",
     "black>=22.0.0",
     "ruff>=0.1.0",
+    "isort>=5.12.0",
+    "mypy>=1.5.0",
     "pre-commit>=2.20.0",
+    "bandit[toml]>=1.7.0",
     "sphinx>=5.0.0",
     "sphinx-rtd-theme>=1.0.0",
+    "jupyterlab>=4.0.0",
+    "tensorboard>=2.13.0",
+    "python-dotenv>=1.0.0",
+    "types-requests>=2.31.0",
+    "types-PyYAML>=6.0.0",
 ]
 test = [
     "pytest>=7.0.0",
@@ -134,3 +143,7 @@ exclude_lines = [
     "if 0:",
     "if __name__ == .__main__.:",
 ]
+
+[tool.bandit]
+exclude_dirs = ["tests", "benchmarks"]
+skips = ["B101", "B601"]  # Skip assert_used and shell_injection for tests
