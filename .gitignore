@@ -235,3 +235,27 @@ prometheus/data/
 # Terragon value tracking
 .terragon/cache/
 .terragon/logs/
+
+# DGDN specific
+models/
+logs/
+.cache/
+tmp/
+temp/
+
+# Development containers
+.devcontainer/*/data/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# IDE specific
+.vscode/settings.json.local
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*~
+.#*

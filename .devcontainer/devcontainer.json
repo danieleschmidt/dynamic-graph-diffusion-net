@@ -1,0 +1,100 @@
+{
+  "name": "Dynamic Graph Diffusion Net",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "18"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.pylint",
+        "ms-python.black-formatter",
+        "charliermarsh.ruff",
+        "ms-python.mypy-type-checker",
+        "ms-toolsai.jupyter",
+        "redhat.vscode-yaml",
+        "ms-vscode.vscode-json",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-python.debugpy",
+        "ms-python.isort",
+        "bungcip.better-toml",
+        "ms-vscode.test-adapter-converter"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": false,
+        "python.linting.ruffEnabled": true,
+        "python.formatting.provider": "black",
+        "python.formatting.blackArgs": ["--line-length=88"],
+        "python.sortImports.args": ["--profile", "black"],
+        "python.testing.pytestEnabled": true,
+        "python.testing.unittestEnabled": false,
+        "python.testing.pytestArgs": [
+          "tests"
+        ],
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": true
+        },
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/*.pyc": true,
+          "**/.pytest_cache": true,
+          "**/.mypy_cache": true,
+          "**/node_modules": true,
+          "**/.git": false
+        },
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+
+  "forwardPorts": [8000, 8080, 8888, 6006],
+  "portsAttributes": {
+    "8000": {
+      "label": "Model Server",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Dashboard",
+      "onAutoForward": "notify"
+    },
+    "8888": {
+      "label": "Jupyter",
+      "onAutoForward": "openPreview"
+    },
+    "6006": {
+      "label": "TensorBoard",
+      "onAutoForward": "openPreview"
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  
+  "remoteUser": "vscode",
+  
+  "mounts": [
+    "source=${localWorkspaceFolder}/.git,target=/workspace/.git,type=bind,consistency=cached"
+  ],
+
+  "containerEnv": {
+    "PYTHONPATH": "/workspace/src",
+    "CUDA_VISIBLE_DEVICES": "0",
+    "TORCH_HOME": "/workspace/.cache/torch"
+  },
+
+  "runArgs": [
+    "--gpus=all",
+    "--shm-size=2g"
+  ]
+}

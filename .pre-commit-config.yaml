@@ -1,44 +1,80 @@
 repos:
+  # Basic hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.4.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
-      - id: check-added-large-files
       - id: check-json
       - id: check-toml
       - id: check-merge-conflict
-      - id: debug-statements
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-case-conflict
       - id: check-docstring-first
+      - id: debug-statements
+      - id: name-tests-test
 
+  # Python formatting with Black
   - repo: https://github.com/psf/black
-    rev: 23.12.1
+    rev: 23.7.0
     hooks:
       - id: black
         language_version: python3
+        args: ['--line-length=88']
 
+  # Import sorting with isort
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: ['--profile=black']
+
+  # Linting with Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.11
+    rev: v0.1.4
     hooks:
       - id: ruff
-        args: [--fix, --exit-non-zero-on-fix]
+        args: ['--fix', '--exit-non-zero-on-fix']
 
+  # Type checking with MyPy
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.8.0
+    rev: v1.5.1
     hooks:
       - id: mypy
-        additional_dependencies: [torch, torch-geometric, numpy]
-        args: [--ignore-missing-imports]
+        additional_dependencies: [types-requests, types-PyYAML]
+        args: ['--config-file=mypy.ini']
+
+  # Security scanning with Bandit
+  - repo: https://github.com/pycqa/bandit
+    rev: 1.7.5
+    hooks:
+      - id: bandit
+        args: ['-c', 'pyproject.toml']
+        additional_dependencies: ['bandit[toml]']
+
+  # Dockerfile linting
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint-docker
+
+  # YAML formatting
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.3
+    hooks:
+      - id: prettier
+        types: [yaml]
+
+  # Shell script checking
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.5
+    hooks:
+      - id: shellcheck
 
 ci:
   autofix_commit_msg: |
     [pre-commit.ci] auto fixes from pre-commit hooks
-
-    for more information, see https://pre-commit.ci
   autofix_prs: true
-  autoupdate_branch: ''
-  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
   autoupdate_schedule: weekly
-  skip: []
-  submodules: false
