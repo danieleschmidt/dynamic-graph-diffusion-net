@@ -9,14 +9,37 @@ __author__ = "Daniel Schmidt"
 __email__ = "author@example.com"
 __license__ = "MIT"
 
-# Core imports will be added as modules are implemented
-# from .models import DynamicGraphDiffusionNet
-# from .data import TemporalData, TemporalDataset
-# from .modules import EdgeTimeEncoder, VariationalDiffusion
+# Core model imports
+from .models import DynamicGraphDiffusionNet, DGDNLayer, MultiHeadTemporalAttention
+
+# Data handling imports
+from .data import TemporalData, TemporalDataset, TemporalGraphDataset, TemporalDataLoader
+
+# Temporal processing imports
+from .temporal import EdgeTimeEncoder, VariationalDiffusion
+
+# Training imports
+from .training import DGDNTrainer, DGDNLoss, DGDNMetrics
 
 __all__ = [
     "__version__",
     "__author__",
     "__email__",
     "__license__",
+    # Core models
+    "DynamicGraphDiffusionNet",
+    "DGDNLayer", 
+    "MultiHeadTemporalAttention",
+    # Data structures
+    "TemporalData",
+    "TemporalDataset",
+    "TemporalGraphDataset", 
+    "TemporalDataLoader",
+    # Temporal processing
+    "EdgeTimeEncoder",
+    "VariationalDiffusion",
+    # Training
+    "DGDNTrainer",
+    "DGDNLoss",
+    "DGDNMetrics",
 ]
