@@ -447,7 +447,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 ```bibtex
 @inproceedings{dgdn2025,
   title={Rationalizing & Augmenting Dynamic Graph Neural Networks},
-  author={Your Name},
+  author={Daniel Schmidt},
   booktitle={International Conference on Learning Representations},
   year={2025}
 }
