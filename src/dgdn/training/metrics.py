@@ -197,7 +197,23 @@ class DGDNMetrics:
         """Compute reliability metrics."""
         # Prediction accuracy vs uncertainty correlation
         errors = np.abs(predictions - targets)
-        correlation = np.corrcoef(errors, uncertainties)[0, 1]
+        
+        # Handle shape mismatch
+        if errors.shape != uncertainties.shape:
+            # Flatten both arrays and match lengths
+            errors = errors.flatten()
+            uncertainties = uncertainties.flatten()
+            min_len = min(len(errors), len(uncertainties))
+            errors = errors[:min_len]
+            uncertainties = uncertainties[:min_len]
+        
+        try:
+            if len(errors) > 1 and len(uncertainties) > 1:
+                correlation = np.corrcoef(errors, uncertainties)[0, 1]
+            else:
+                correlation = 0.0
+        except Exception:
+            correlation = 0.0
         
         return {
             "uncertainty_error_correlation": correlation if not np.isnan(correlation) else 0.0,

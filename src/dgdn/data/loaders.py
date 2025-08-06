@@ -51,11 +51,21 @@ class DynamicBatchSampler(Sampler):
         window_size = 100  # Should match dataset windowing
         min_time, max_time = timestamps.min(), timestamps.max()
         
-        for start in torch.arange(min_time, max_time - window_size, window_size // 2):
-            end = start + window_size
-            mask = (timestamps >= start) & (timestamps < end)
-            num_edges = mask.sum().item()
-            self.sample_complexities.append(num_edges)
+        # Handle edge case where data span is smaller than window size
+        if max_time - min_time < window_size:
+            # Use entire dataset as one sample
+            self.sample_complexities.append(len(timestamps))
+        else:
+            for start in torch.arange(min_time, max_time - window_size, window_size // 2):
+                end = start + window_size
+                mask = (timestamps >= start) & (timestamps < end)
+                num_edges = mask.sum().item()
+                if num_edges > 0:  # Only include non-empty windows
+                    self.sample_complexities.append(num_edges)
+        
+        # Ensure we have at least one sample
+        if len(self.sample_complexities) == 0:
+            self.sample_complexities.append(len(timestamps))
         
         self.num_samples = len(self.sample_complexities)
     
@@ -212,12 +222,23 @@ class IndexedTemporalDataset:
         self.windows = []
         step_size = self.window_size // 2  # 50% overlap
         
-        for start in np.arange(min_time, max_time - self.window_size, step_size):
-            end = start + self.window_size
-            mask = (timestamps >= start) & (timestamps < end)
-            
-            if mask.sum() > 0:  # Only include non-empty windows
-                self.windows.append(torch.from_numpy(mask))
+        # Handle edge case where data span is smaller than window size
+        if max_time - min_time < self.window_size:
+            # Use entire dataset as one window
+            mask = np.ones(len(timestamps), dtype=bool)
+            self.windows.append(torch.from_numpy(mask))
+        else:
+            for start in np.arange(min_time, max_time - self.window_size, step_size):
+                end = start + self.window_size
+                mask = (timestamps >= start) & (timestamps < end)
+                
+                if mask.sum() > 0:  # Only include non-empty windows
+                    self.windows.append(torch.from_numpy(mask))
+        
+        # Ensure we have at least one window
+        if len(self.windows) == 0:
+            mask = np.ones(len(timestamps), dtype=bool)
+            self.windows.append(torch.from_numpy(mask))
     
     def __len__(self) -> int:
         """Number of temporal windows."""
@@ -302,9 +323,18 @@ def create_data_loaders(
     if test_batch_size is None:
         test_batch_size = val_batch_size
     
-    # Check if dataset has been split
+    # Check if this is a single dataset (not split)
     if not hasattr(dataset, '_train_data') or dataset._train_data is None:
-        raise ValueError("Dataset must be split before creating data loaders")
+        # Return a single loader for the dataset itself
+        loader = TemporalDataLoader(
+            dataset,
+            batch_size=batch_size,
+            shuffle=True,
+            num_workers=num_workers,
+            pin_memory=pin_memory,
+            dynamic_batching=dynamic_batching
+        )
+        return loader, None, None
     
     # Create loaders
     train_loader = TemporalDataLoader(

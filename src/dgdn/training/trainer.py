@@ -10,11 +10,14 @@ import os
 from typing import Dict, Optional, List, Tuple, Any, Callable
 from tqdm import tqdm
 import warnings
+import logging
+from pathlib import Path
 
 from ..models import DynamicGraphDiffusionNet
 from ..data import TemporalDataset, create_data_loaders
 from .losses import DGDNLoss
 from .metrics import DGDNMetrics, EdgePredictionMetrics, NodeClassificationMetrics
+from ..optimization import MixedPrecisionTrainer, MemoryOptimizer, ParallelismManager, CacheManager
 
 
 class DGDNTrainer:
@@ -101,6 +104,29 @@ class DGDNTrainer:
         self.early_stopping_patience = None
         self.early_stopping_counter = 0
         
+        # Setup logging
+        self.logger = self._setup_logger()
+        
+        # Security and validation
+        self._validate_init_parameters(learning_rate, weight_decay, diffusion_loss_weight, temporal_reg_weight)
+        
+        # Performance optimization setup
+        optimization_config = kwargs.get('optimization', {})
+        self.enable_mixed_precision = optimization_config.get('mixed_precision', torch.cuda.is_available())
+        self.enable_caching = optimization_config.get('caching', True)
+        self.enable_memory_optimization = optimization_config.get('memory_optimization', True)
+        
+        # Initialize optimization components
+        self.mixed_precision = MixedPrecisionTrainer(self.enable_mixed_precision)
+        self.memory_optimizer = MemoryOptimizer() if self.enable_memory_optimization else None
+        self.parallelism_manager = ParallelismManager(self.model)
+        self.cache_manager = CacheManager() if self.enable_caching else None
+        
+        self.logger.info(f"Initialized DGDN trainer for {task} task")
+        self.logger.info(f"Device: {self.device}, Model parameters: {sum(p.numel() for p in model.parameters()):,}")
+        self.logger.info(f"Optimizations: Mixed Precision={self.enable_mixed_precision}, "
+                        f"Caching={self.enable_caching}, Memory Opt={self.enable_memory_optimization}")
+        
     def _setup_optimizer(self, optimizer_type: str) -> optim.Optimizer:
         """Setup optimizer."""
         if optimizer_type.lower() == "adam":
@@ -170,21 +196,38 @@ class DGDNTrainer:
         """
         self.early_stopping_patience = early_stopping_patience
         
-        # Create data loaders
-        train_loader, val_loader, _ = create_data_loaders(
-            train_data if hasattr(train_data, '_train_data') else train_data,
-            batch_size=batch_size,
-            num_workers=0,
-            dynamic_batching=True
-        )
+        # Validate training data
+        self._validate_training_data(train_data, val_data)
         
-        if val_data is not None:
-            val_loader = create_data_loaders(
-                val_data if hasattr(val_data, '_val_data') else val_data,
-                batch_size=batch_size * 2,  # Larger batch for validation
+        # Create data loaders
+        if hasattr(train_data, '_train_data') and train_data._train_data is not None:
+            # Split dataset case
+            train_loader, val_loader, _ = create_data_loaders(
+                train_data,
+                batch_size=batch_size,
                 num_workers=0,
-                dynamic_batching=False
-            )[1]
+                dynamic_batching=True
+            )
+        else:
+            # Individual datasets case
+            from ..data import TemporalDataLoader
+            train_loader = TemporalDataLoader(
+                train_data,
+                batch_size=batch_size,
+                shuffle=True,
+                num_workers=0,
+                dynamic_batching=True
+            )
+            if val_data is not None:
+                val_loader = TemporalDataLoader(
+                    val_data,
+                    batch_size=batch_size,
+                    shuffle=False,
+                    num_workers=0,
+                    dynamic_batching=False
+                )
+            else:
+                val_loader = None
         
         # Training loop
         for epoch in range(epochs):
@@ -238,49 +281,63 @@ class DGDNTrainer:
             # Zero gradients
             self.optimizer.zero_grad()
             
-            # Forward pass
+            # Forward pass with mixed precision
             try:
-                output = self.model(batch_data, return_uncertainty=True)
+                with self.mixed_precision.autocast_context():
+                    output = self.model(batch_data, return_uncertainty=True)
+                    
+                    # Compute loss
+                    if self.task == "edge_prediction":
+                        targets = getattr(batch_data, 'y', torch.ones(batch_data.edge_index.shape[1]))
+                        loss_dict = self.loss_fn(output, targets, batch_data.edge_index)
+                    else:
+                        targets = getattr(batch_data, 'y', torch.zeros(batch_data.num_nodes, dtype=torch.long))
+                        loss_dict = self.loss_fn(output, targets)
+                    
+                    loss = loss_dict["total"]
                 
-                # Compute loss
-                if self.task == "edge_prediction":
-                    targets = getattr(batch_data, 'y', torch.ones(batch_data.edge_index.shape[1]))
-                    loss_dict = self.loss_fn(output, targets, batch_data.edge_index)
-                else:
-                    targets = getattr(batch_data, 'y', torch.zeros(batch_data.num_nodes, dtype=torch.long))
-                    loss_dict = self.loss_fn(output, targets)
-                
-                loss = loss_dict["total"]
-                
-                # Backward pass
-                loss.backward()
+                # Backward pass with gradient scaling
+                scaled_loss = self.mixed_precision.scale_loss(loss)
+                scaled_loss.backward()
                 
                 # Gradient clipping
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
                 
-                # Optimizer step
-                self.optimizer.step()
+                # Optimizer step with mixed precision
+                self.mixed_precision.step_optimizer(self.optimizer)
                 
                 # Update metrics
                 predictions = self._extract_predictions(output, batch_data)
+                uncertainties = self._extract_uncertainties(output, batch_data, predictions.shape)
                 self.metrics.update(
                     predictions=predictions,
                     targets=targets,
-                    uncertainties=output.get("uncertainty"),
+                    uncertainties=uncertainties,
                     loss=loss.item()
                 )
                 
                 epoch_losses.append(loss.item())
                 
+                # Memory cleanup if needed
+                if self.memory_optimizer and batch_idx % 10 == 0:
+                    memory_stats = self.memory_optimizer.monitor_memory_usage()
+                    if memory_stats.get('ram_percent', 0) > 90:
+                        self.memory_optimizer.cleanup_memory()
+                
                 # Update progress bar
                 if verbose:
-                    progress_bar.set_postfix({
+                    postfix = {
                         "loss": f"{loss.item():.4f}",
                         "kl": f"{loss_dict['variational'].item():.4f}"
-                    })
+                    }
+                    if self.mixed_precision.enabled:
+                        postfix["scale"] = f"{self.mixed_precision.get_scale():.0f}"
+                    progress_bar.set_postfix(postfix)
                     
             except Exception as e:
-                print(f"Error in batch {batch_idx}: {e}")
+                self.logger.error(f"Error in batch {batch_idx}: {e}")
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
                 continue
         
         return self.metrics.compute()
@@ -308,10 +365,11 @@ class DGDNTrainer:
                     
                     # Update metrics
                     predictions = self._extract_predictions(output, batch_data)
+                    uncertainties = self._extract_uncertainties(output, batch_data, predictions.shape)
                     val_metrics.update(
                         predictions=predictions,
                         targets=targets,
-                        uncertainties=output.get("uncertainty"),
+                        uncertainties=uncertainties,
                         loss=loss_dict["total"].item()
                     )
                     
@@ -342,6 +400,34 @@ class DGDNTrainer:
         
         else:
             return model_output["node_embeddings"]
+    
+    def _extract_uncertainties(self, model_output: Dict, batch_data, target_shape: torch.Size) -> Optional[torch.Tensor]:
+        """Extract uncertainties matching the prediction shape."""
+        uncertainty = model_output.get("uncertainty")
+        if uncertainty is None:
+            return None
+        
+        if self.task == "edge_prediction":
+            # Extract uncertainties for edges
+            edge_index = batch_data.edge_index
+            src_uncertainty = uncertainty[edge_index[0]]
+            tgt_uncertainty = uncertainty[edge_index[1]]
+            
+            # Combine uncertainties (mean or sum) and flatten to 1D
+            edge_uncertainty = (src_uncertainty + tgt_uncertainty) / 2
+            if edge_uncertainty.dim() > 1:
+                edge_uncertainty = edge_uncertainty.mean(dim=-1)  # Average across feature dimension
+            return edge_uncertainty
+        
+        elif self.task == "node_classification":
+            # Return node uncertainties as is
+            return uncertainty
+        
+        else:
+            # Reshape to match target shape if needed
+            if uncertainty.shape != target_shape:
+                return uncertainty.view(-1)[:target_shape.numel()].view(target_shape)
+            return uncertainty
     
     def _should_stop_early(self, val_metrics: Dict[str, float], save_best: bool) -> bool:
         """Check if training should stop early."""
@@ -412,9 +498,11 @@ class DGDNTrainer:
         test_metrics = DGDNMetrics(task=self.task)
         
         # Create test loader
-        _, _, test_loader = create_data_loaders(
+        from ..data import TemporalDataLoader
+        test_loader = TemporalDataLoader(
             test_data,
             batch_size=batch_size,
+            shuffle=False,
             num_workers=0,
             dynamic_batching=False
         )
@@ -435,10 +523,11 @@ class DGDNTrainer:
                     targets = getattr(batch_data, 'y', torch.zeros(batch_data.num_nodes, dtype=torch.long))
                 
                 # Update metrics
+                uncertainties = self._extract_uncertainties(output, batch_data, predictions.shape)
                 test_metrics.update(
                     predictions=predictions,
                     targets=targets,
-                    uncertainties=output.get("uncertainty")
+                    uncertainties=uncertainties
                 )
         
         return test_metrics.compute()
@@ -490,3 +579,121 @@ class DGDNTrainer:
                 result["logvar"] = output.get("logvar")
             
             return result
+    
+    def _setup_logger(self) -> logging.Logger:
+        """Setup structured logging."""
+        logger = logging.getLogger(f"DGDN.{self.__class__.__name__}")
+        logger.setLevel(logging.INFO)
+        
+        # Prevent duplicate handlers
+        if not logger.handlers:
+            # Console handler
+            console_handler = logging.StreamHandler()
+            console_handler.setLevel(logging.INFO)
+            
+            # File handler
+            log_file = Path(self.log_dir) / "training.log"
+            file_handler = logging.FileHandler(log_file)
+            file_handler.setLevel(logging.DEBUG)
+            
+            # Formatter
+            formatter = logging.Formatter(
+                '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+            )
+            console_handler.setFormatter(formatter)
+            file_handler.setFormatter(formatter)
+            
+            logger.addHandler(console_handler)
+            logger.addHandler(file_handler)
+        
+        return logger
+    
+    def _validate_init_parameters(self, learning_rate, weight_decay, 
+                                 diffusion_loss_weight, temporal_reg_weight):
+        """Validate trainer initialization parameters."""
+        if not isinstance(learning_rate, (int, float)) or learning_rate <= 0:
+            raise ValueError(f"learning_rate must be positive, got {learning_rate}")
+        if learning_rate > 1.0:
+            self.logger.warning(f"Very high learning rate: {learning_rate}")
+        
+        if not isinstance(weight_decay, (int, float)) or weight_decay < 0:
+            raise ValueError(f"weight_decay must be non-negative, got {weight_decay}")
+        if weight_decay > 0.1:
+            self.logger.warning(f"High weight decay: {weight_decay}")
+        
+        if not isinstance(diffusion_loss_weight, (int, float)) or diffusion_loss_weight < 0:
+            raise ValueError(f"diffusion_loss_weight must be non-negative, got {diffusion_loss_weight}")
+        
+        if not isinstance(temporal_reg_weight, (int, float)) or temporal_reg_weight < 0:
+            raise ValueError(f"temporal_reg_weight must be non-negative, got {temporal_reg_weight}")
+    
+    def _validate_training_data(self, train_data, val_data=None):
+        """Validate training and validation data."""
+        if not hasattr(train_data, 'data'):
+            raise ValueError("train_data must have a 'data' attribute")
+        
+        # Check for minimum data size
+        if hasattr(train_data.data, 'timestamps'):
+            num_edges = len(train_data.data.timestamps)
+            if num_edges < 10:
+                raise ValueError(f"Insufficient training data: only {num_edges} edges")
+            self.logger.info(f"Training data: {num_edges} edges")
+        
+        if val_data is not None:
+            if not hasattr(val_data, 'data'):
+                raise ValueError("val_data must have a 'data' attribute")
+            if hasattr(val_data.data, 'timestamps'):
+                num_val_edges = len(val_data.data.timestamps)
+                self.logger.info(f"Validation data: {num_val_edges} edges")
+    
+    def _secure_checkpoint_path(self, filename: str) -> str:
+        """Secure checkpoint path validation."""
+        # Sanitize filename
+        import re
+        filename = re.sub(r'[^\w\-_\.]', '_', filename)
+        
+        # Ensure .pth extension
+        if not filename.endswith('.pth'):
+            filename += '.pth'
+        
+        # Check path traversal attacks
+        filepath = Path(self.checkpoint_dir) / filename
+        if not str(filepath.resolve()).startswith(str(Path(self.checkpoint_dir).resolve())):
+            raise ValueError(f"Insecure checkpoint path: {filename}")
+        
+        return str(filepath)
+    
+    def _log_training_progress(self, epoch, train_metrics, val_metrics=None):
+        """Log training progress with security considerations."""
+        # Log training metrics
+        train_loss = train_metrics.get('loss', 0.0)
+        train_metric = train_metrics.get(self._get_primary_metric(), 0.0)
+        
+        log_msg = f"Epoch {epoch:3d} | Train Loss: {train_loss:.4f} | Train Metric: {train_metric:.4f}"
+        
+        if val_metrics:
+            val_loss = val_metrics.get('loss', 0.0)
+            val_metric = val_metrics.get(self._get_primary_metric(), 0.0)
+            log_msg += f" | Val Loss: {val_loss:.4f} | Val Metric: {val_metric:.4f}"
+        
+        self.logger.info(log_msg)
+        
+        # Log to tensorboard (with rate limiting)
+        if hasattr(self, 'writer') and epoch % 5 == 0:  # Log every 5 epochs
+            for key, value in train_metrics.items():
+                if isinstance(value, (int, float)) and not (key.startswith('_') or key == 'loss'):
+                    self.writer.add_scalar(f"train/{key}", value, epoch)
+            
+            if val_metrics:
+                for key, value in val_metrics.items():
+                    if isinstance(value, (int, float)) and not (key.startswith('_') or key == 'loss'):
+                        self.writer.add_scalar(f"val/{key}", value, epoch)
+    
+    def _get_primary_metric(self) -> str:
+        """Get primary metric for the task."""
+        if self.task == "edge_prediction":
+            return "auc"
+        elif self.task == "node_classification":
+            return "accuracy"
+        else:
+            return "loss"
