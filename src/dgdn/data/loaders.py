@@ -2,7 +2,7 @@
 
 import torch
 from torch.utils.data import DataLoader, Sampler
-from typing import List, Iterator, Optional, Callable
+from typing import List, Iterator, Optional, Callable, Tuple
 import numpy as np
 from .datasets import TemporalData, TemporalDataset, create_temporal_batch
 
