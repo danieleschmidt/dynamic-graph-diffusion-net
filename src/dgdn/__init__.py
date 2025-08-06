@@ -21,6 +21,11 @@ from .temporal import EdgeTimeEncoder, VariationalDiffusion
 # Training imports
 from .training import DGDNTrainer, DGDNLoss, DGDNMetrics
 
+# Global features
+from .i18n import get_translator, set_global_locale, DGDNTranslator
+from .compliance import PrivacyManager, GDPRCompliance, CCPACompliance, PDPACompliance
+from .deployment import RegionManager, DeploymentRegion
+
 __all__ = [
     "__version__",
     "__author__",
@@ -42,4 +47,14 @@ __all__ = [
     "DGDNTrainer",
     "DGDNLoss",
     "DGDNMetrics",
+    # Global features
+    "get_translator",
+    "set_global_locale", 
+    "DGDNTranslator",
+    "PrivacyManager",
+    "GDPRCompliance",
+    "CCPACompliance", 
+    "PDPACompliance",
+    "RegionManager",
+    "DeploymentRegion",
 ]

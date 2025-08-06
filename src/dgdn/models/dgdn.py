@@ -52,6 +52,13 @@ class DynamicGraphDiffusionNet(nn.Module):
     ):
         super().__init__()
         
+        # Input validation
+        self._validate_init_parameters(
+            node_dim, edge_dim, time_dim, hidden_dim, num_layers, 
+            num_heads, diffusion_steps, aggregation, dropout, 
+            activation, time_encoding, max_time
+        )
+        
         self.node_dim = node_dim
         self.edge_dim = edge_dim
         self.time_dim = time_dim
@@ -151,6 +158,8 @@ class DynamicGraphDiffusionNet(nn.Module):
         Returns:
             Dictionary containing model outputs
         """
+        # Validate input data
+        self._validate_forward_input(data)
         edge_index = data.edge_index
         timestamps = data.timestamps
         node_features = getattr(data, 'node_features', None)
@@ -376,6 +385,102 @@ class DynamicGraphDiffusionNet(nn.Module):
         losses["total"] = total_loss
         
         return losses
+    
+    def _validate_init_parameters(self, node_dim, edge_dim, time_dim, hidden_dim, 
+                                 num_layers, num_heads, diffusion_steps, aggregation,
+                                 dropout, activation, time_encoding, max_time):
+        """Validate initialization parameters."""
+        # Dimension validations
+        if not isinstance(node_dim, int) or node_dim <= 0:
+            raise ValueError(f"node_dim must be a positive integer, got {node_dim}")
+        if not isinstance(edge_dim, int) or edge_dim < 0:
+            raise ValueError(f"edge_dim must be a non-negative integer, got {edge_dim}")
+        if not isinstance(time_dim, int) or time_dim <= 0:
+            raise ValueError(f"time_dim must be a positive integer, got {time_dim}")
+        if not isinstance(hidden_dim, int) or hidden_dim <= 0:
+            raise ValueError(f"hidden_dim must be a positive integer, got {hidden_dim}")
+        
+        # Architecture validations
+        if not isinstance(num_layers, int) or num_layers <= 0:
+            raise ValueError(f"num_layers must be a positive integer, got {num_layers}")
+        if not isinstance(num_heads, int) or num_heads <= 0:
+            raise ValueError(f"num_heads must be a positive integer, got {num_heads}")
+        if hidden_dim % num_heads != 0:
+            raise ValueError(f"hidden_dim ({hidden_dim}) must be divisible by num_heads ({num_heads})")
+        
+        # Diffusion validations
+        if not isinstance(diffusion_steps, int) or diffusion_steps <= 0:
+            raise ValueError(f"diffusion_steps must be a positive integer, got {diffusion_steps}")
+        
+        # String parameter validations
+        valid_aggregations = {"attention", "mean", "sum"}
+        if aggregation not in valid_aggregations:
+            raise ValueError(f"aggregation must be one of {valid_aggregations}, got {aggregation}")
+        
+        valid_activations = {"relu", "gelu", "swish", "leaky_relu"}
+        if activation not in valid_activations:
+            raise ValueError(f"activation must be one of {valid_activations}, got {activation}")
+        
+        valid_time_encodings = {"fourier", "positional", "multiscale"}
+        if time_encoding not in valid_time_encodings:
+            raise ValueError(f"time_encoding must be one of {valid_time_encodings}, got {time_encoding}")
+        
+        # Numerical parameter validations
+        if not isinstance(dropout, (int, float)) or not (0.0 <= dropout < 1.0):
+            raise ValueError(f"dropout must be a float in [0.0, 1.0), got {dropout}")
+        if not isinstance(max_time, (int, float)) or max_time <= 0:
+            raise ValueError(f"max_time must be a positive number, got {max_time}")
+    
+    def _validate_forward_input(self, data):
+        """Validate forward pass input data."""
+        if not hasattr(data, 'edge_index'):
+            raise ValueError("Input data must have 'edge_index' attribute")
+        if not hasattr(data, 'timestamps'):
+            raise ValueError("Input data must have 'timestamps' attribute")
+        if not hasattr(data, 'num_nodes'):
+            raise ValueError("Input data must have 'num_nodes' attribute")
+        
+        # Validate tensor shapes and types
+        edge_index = data.edge_index
+        timestamps = data.timestamps
+        
+        if not isinstance(edge_index, torch.Tensor):
+            raise TypeError("edge_index must be a torch.Tensor")
+        if not isinstance(timestamps, torch.Tensor):
+            raise TypeError("timestamps must be a torch.Tensor")
+        
+        if edge_index.dim() != 2 or edge_index.size(0) != 2:
+            raise ValueError(f"edge_index must have shape [2, num_edges], got {edge_index.shape}")
+        if timestamps.dim() != 1:
+            raise ValueError(f"timestamps must be 1-dimensional, got {timestamps.shape}")
+        if edge_index.size(1) != timestamps.size(0):
+            raise ValueError(f"Number of edges in edge_index ({edge_index.size(1)}) must match timestamps ({timestamps.size(0)})")
+        
+        # Check for valid node indices
+        max_node_idx = edge_index.max().item()
+        if max_node_idx >= data.num_nodes:
+            raise ValueError(f"Maximum node index ({max_node_idx}) exceeds num_nodes ({data.num_nodes})")
+        if edge_index.min().item() < 0:
+            raise ValueError("Node indices in edge_index must be non-negative")
+        
+        # Validate optional attributes
+        if hasattr(data, 'node_features') and data.node_features is not None:
+            node_features = data.node_features
+            if not isinstance(node_features, torch.Tensor):
+                raise TypeError("node_features must be a torch.Tensor")
+            if node_features.size(0) != data.num_nodes:
+                raise ValueError(f"node_features size ({node_features.size(0)}) must match num_nodes ({data.num_nodes})")
+            if node_features.size(1) != self.node_dim:
+                raise ValueError(f"node_features dimension ({node_features.size(1)}) must match node_dim ({self.node_dim})")
+        
+        if hasattr(data, 'edge_attr') and data.edge_attr is not None:
+            edge_attr = data.edge_attr
+            if not isinstance(edge_attr, torch.Tensor):
+                raise TypeError("edge_attr must be a torch.Tensor")
+            if edge_attr.size(0) != timestamps.size(0):
+                raise ValueError(f"edge_attr size ({edge_attr.size(0)}) must match number of edges ({timestamps.size(0)})")
+            if self.edge_dim > 0 and edge_attr.size(1) != self.edge_dim:
+                raise ValueError(f"edge_attr dimension ({edge_attr.size(1)}) must match edge_dim ({self.edge_dim})")
 
 
 class EdgePredictor(nn.Module):
