@@ -76,6 +76,10 @@ class EdgeTimeEncoder(nn.Module):
         Returns:
             time_encoding: Tensor of shape [..., time_dim] containing temporal embeddings
         """
+        # Handle empty input gracefully
+        if timestamps.numel() == 0:
+            return torch.empty(0, self.time_dim, device=timestamps.device, dtype=torch.float32)
+        
         # Ensure timestamps are float
         timestamps = timestamps.float()
         
