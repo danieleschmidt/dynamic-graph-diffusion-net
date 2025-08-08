@@ -7,7 +7,7 @@ import torch
 from torch_geometric.data import Data, Dataset
 from typing import Optional, List, Tuple, Dict, Any, Union
 from dataclasses import dataclass
-import pandas as pd
+# import pandas as pd  # Optional dependency - will be imported when needed
 
 
 @dataclass

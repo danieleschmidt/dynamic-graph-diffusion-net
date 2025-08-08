@@ -18,13 +18,13 @@ from .data import TemporalData, TemporalDataset, TemporalGraphDataset, TemporalD
 # Temporal processing imports
 from .temporal import EdgeTimeEncoder, VariationalDiffusion
 
-# Training imports
-from .training import DGDNTrainer, DGDNLoss, DGDNMetrics
+# Training imports - optional for basic functionality
+# from .training import DGDNTrainer, DGDNLoss, DGDNMetrics
 
-# Global features
-from .i18n import get_translator, set_global_locale, DGDNTranslator
-from .compliance import PrivacyManager, GDPRCompliance, CCPACompliance, PDPACompliance
-from .deployment import RegionManager, DeploymentRegion
+# Global features - optional for basic functionality
+# from .i18n import get_translator, set_global_locale, DGDNTranslator
+# from .compliance import PrivacyManager, GDPRCompliance, CCPACompliance, PDPACompliance
+# from .deployment import RegionManager, DeploymentRegion
 
 __all__ = [
     "__version__",
@@ -43,18 +43,4 @@ __all__ = [
     # Temporal processing
     "EdgeTimeEncoder",
     "VariationalDiffusion",
-    # Training
-    "DGDNTrainer",
-    "DGDNLoss",
-    "DGDNMetrics",
-    # Global features
-    "get_translator",
-    "set_global_locale", 
-    "DGDNTranslator",
-    "PrivacyManager",
-    "GDPRCompliance",
-    "CCPACompliance", 
-    "PDPACompliance",
-    "RegionManager",
-    "DeploymentRegion",
 ]
