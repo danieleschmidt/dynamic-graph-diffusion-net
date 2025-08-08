@@ -136,7 +136,7 @@ class VariationalDiffusion(nn.Module):
         # Sample from final distribution
         if self.training:
             std = torch.exp(0.5 * current_logvar)
-            eps = torch.randn_like(std)
+            eps = torch.randn_like(std, device=std.device, dtype=std.dtype, requires_grad=False)
             final_z = current_mean + eps * std
         else:
             final_z = current_mean
@@ -288,7 +288,7 @@ class DiffusionLayer(MessagePassing):
         # Sample from current distribution
         if self.training:
             std = torch.exp(0.5 * x_logvar)
-            eps = torch.randn_like(std)
+            eps = torch.randn_like(std, device=std.device, dtype=std.dtype, requires_grad=False)
             x = x_mean + eps * std
         else:
             x = x_mean
@@ -312,7 +312,7 @@ class DiffusionLayer(MessagePassing):
         # Sample from new distribution
         if self.training:
             std = torch.exp(0.5 * new_logvar)
-            eps = torch.randn_like(std)
+            eps = torch.randn_like(std, device=std.device, dtype=std.dtype, requires_grad=False)
             z = new_mean + eps * std
         else:
             z = new_mean

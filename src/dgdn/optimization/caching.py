@@ -41,7 +41,7 @@ class EmbeddingCache:
         else:
             key_data = f"{node_ids_str}_{time_str}"
         
-        return hashlib.md5(key_data.encode()).hexdigest()
+        return hashlib.sha256(key_data.encode()).hexdigest()
     
     def get(self, node_ids: torch.Tensor, time: float, 
             model_state: Optional[str] = None) -> Optional[torch.Tensor]:
@@ -148,8 +148,8 @@ class AttentionCache:
                                temporal_encoding: torch.Tensor) -> str:
         """Generate key for attention pattern."""
         # Hash edge structure and temporal pattern
-        edge_hash = hashlib.md5(edge_index.cpu().numpy().tobytes()).hexdigest()
-        temporal_hash = hashlib.md5(temporal_encoding.cpu().numpy().tobytes()).hexdigest()
+        edge_hash = hashlib.sha256(edge_index.cpu().numpy().tobytes()).hexdigest()
+        temporal_hash = hashlib.sha256(temporal_encoding.cpu().numpy().tobytes()).hexdigest()
         
         return f"{edge_hash}_{temporal_hash}"
     
@@ -220,7 +220,7 @@ class ComputationCache:
         hashable_kwargs = tensorize_args(kwargs)
         
         key_data = f"{func_name}_{hashable_args}_{hashable_kwargs}"
-        return hashlib.md5(str(key_data).encode()).hexdigest()
+        return hashlib.sha256(str(key_data).encode()).hexdigest()
     
     def get(self, func_name: str, args: Tuple, kwargs: Dict) -> Tuple[bool, Any]:
         """Get cached result."""
