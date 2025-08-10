@@ -1,0 +1,234 @@
+# DGDN Production Configuration
+server:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  worker_class: "uvicorn.workers.UvicornWorker"
+  worker_connections: 1000
+  max_requests: 10000
+  max_requests_jitter: 1000
+  timeout: 300
+  keepalive: 120
+
+# Model configuration
+models:
+  default_model: "foundation_dgdn"
+  model_cache_size: 10
+  model_cache_ttl: 3600
+  model_storage_path: "/app/models"
+  
+  foundation_dgdn:
+    type: "FoundationDGDN"
+    node_dim: 64
+    hidden_dim: 256
+    num_layers: 4
+    max_nodes: 10000
+    max_time: 1000
+    
+  continuous_dgdn:
+    type: "ContinuousDGDN"
+    node_dim: 64
+    hidden_dim: 256
+    num_layers: 3
+    ode_solver: "dopri5"
+    
+  edge_dgdn:
+    type: "EdgeDGDN"
+    node_dim: 32
+    hidden_dim: 128
+    num_layers: 2
+    quantization: true
+    compression_ratio: 0.5
+
+# Database configuration
+database:
+  url: "${DGDN_POSTGRES_URL}"
+  pool_size: 20
+  max_overflow: 30
+  pool_timeout: 30
+  pool_recycle: 3600
+  echo: false
+
+# Redis configuration
+redis:
+  url: "${DGDN_REDIS_URL}"
+  max_connections: 100
+  retry_on_timeout: true
+  socket_timeout: 5
+  socket_connect_timeout: 5
+
+# Caching
+cache:
+  backend: "redis"
+  default_ttl: 3600
+  key_prefix: "dgdn:"
+  
+  tiers:
+    l1:  # In-memory cache
+      type: "memory"
+      max_size: 1000
+      ttl: 300
+    l2:  # Redis cache
+      type: "redis"
+      max_size: 10000
+      ttl: 3600
+    l3:  # Database cache
+      type: "database"
+      ttl: 86400
+
+# Security configuration
+security:
+  secret_key: "${DGDN_SECRET_KEY}"
+  encryption:
+    algorithm: "AES-256-GCM"
+    key_derivation: "PBKDF2-SHA256"
+    iterations: 100000
+  
+  authentication:
+    jwt_algorithm: "RS256"
+    access_token_ttl: 900  # 15 minutes
+    refresh_token_ttl: 604800  # 7 days
+    
+  rate_limiting:
+    requests_per_minute: 100
+    burst: 200
+    
+  cors:
+    allow_origins: ["https://your-frontend.com"]
+    allow_methods: ["GET", "POST", "PUT", "DELETE"]
+    allow_headers: ["*"]
+    expose_headers: ["X-Request-ID"]
+
+# Monitoring and observability
+monitoring:
+  metrics:
+    enabled: true
+    endpoint: "/metrics"
+    include_labels: ["method", "status_code", "endpoint"]
+    
+  tracing:
+    enabled: true
+    service_name: "dgdn-api"
+    jaeger_endpoint: "http://jaeger:14268/api/traces"
+    sample_rate: 0.1
+    
+  health_checks:
+    enabled: true
+    endpoints:
+      liveness: "/health/live"
+      readiness: "/health/ready"
+    database_timeout: 5
+    redis_timeout: 3
+    
+  alerting:
+    enabled: true
+    webhook_url: "${DGDN_ALERT_WEBHOOK}"
+    
+    thresholds:
+      response_time_p95: 1000  # ms
+      error_rate: 0.05  # 5%
+      memory_usage: 0.8  # 80%
+      cpu_usage: 0.8  # 80%
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "json"
+  
+  handlers:
+    console:
+      enabled: true
+      format: "json"
+      level: "INFO"
+      
+    file:
+      enabled: true
+      path: "/app/logs/dgdn.log"
+      format: "json"
+      level: "INFO"
+      max_size: "100MB"
+      backup_count: 10
+      
+    syslog:
+      enabled: false
+      address: "localhost:514"
+      facility: "user"
+      
+  loggers:
+    dgdn:
+      level: "INFO"
+      propagate: false
+    uvicorn:
+      level: "WARNING"
+    sqlalchemy:
+      level: "WARNING"
+
+# Feature flags
+features:
+  experimental_models: false
+  quantum_computing: false
+  federated_learning: true
+  causal_discovery: true
+  continuous_time: true
+  edge_deployment: true
+  advanced_monitoring: true
+  
+# Performance optimization
+performance:
+  async_workers: 4
+  thread_pool_size: 20
+  connection_pool_size: 50
+  
+  batching:
+    enabled: true
+    max_batch_size: 32
+    batch_timeout: 100  # ms
+    
+  model_serving:
+    gpu_memory_fraction: 0.7
+    allow_growth: true
+    mixed_precision: true
+    
+  prefetching:
+    enabled: true
+    prefetch_size: 10
+
+# Compliance and privacy
+compliance:
+  gdpr_enabled: true
+  data_retention_days: 730
+  anonymization_enabled: true
+  audit_logging: true
+  
+  regions:
+    eu:
+      data_residency: "eu-west-1"
+      encryption_required: true
+    us:
+      data_residency: "us-east-1"
+      encryption_required: true
+      
+# Backup and disaster recovery
+backup:
+  enabled: true
+  s3_bucket: "${DGDN_BACKUP_BUCKET}"
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention_days: 30
+  
+  models:
+    enabled: true
+    schedule: "0 6 * * 0"  # Weekly on Sunday at 6 AM
+    compression: true
+    
+disaster_recovery:
+  enabled: true
+  rpo: 3600  # 1 hour
+  rto: 1800  # 30 minutes
+  backup_regions: ["us-west-2", "eu-central-1"]
+
+# Development and debugging
+debug:
+  enabled: false
+  profiling: false
+  query_debugging: false
+  memory_profiling: false

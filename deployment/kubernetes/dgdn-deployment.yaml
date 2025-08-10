@@ -1,0 +1,249 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dgdn-api
+  namespace: dgdn
+  labels:
+    app: dgdn
+    component: api
+    version: v1.0.0
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: dgdn
+      component: api
+  template:
+    metadata:
+      labels:
+        app: dgdn
+        component: api
+        version: v1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: dgdn-service-account
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        fsGroup: 1001
+      containers:
+      - name: dgdn-api
+        image: dgdn:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          name: http
+          protocol: TCP
+        env:
+        - name: DGDN_ENV
+          value: "production"
+        - name: DGDN_LOG_LEVEL
+          value: "INFO"
+        - name: DGDN_REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: dgdn-secrets
+              key: redis-url
+        - name: DGDN_POSTGRES_URL
+          valueFrom:
+            secretKeyRef:
+              name: dgdn-secrets
+              key: postgres-url
+        - name: DGDN_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dgdn-secrets
+              key: secret-key
+        volumeMounts:
+        - name: dgdn-config
+          mountPath: /app/configs
+          readOnly: true
+        - name: dgdn-models
+          mountPath: /app/models
+        - name: dgdn-logs
+          mountPath: /app/logs
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 8000
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: dgdn-config
+        configMap:
+          name: dgdn-config
+      - name: dgdn-models
+        persistentVolumeClaim:
+          claimName: dgdn-models-pvc
+      - name: dgdn-logs
+        persistentVolumeClaim:
+          claimName: dgdn-logs-pvc
+      terminationGracePeriodSeconds: 30
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - dgdn
+                - key: component
+                  operator: In
+                  values:
+                  - api
+              topologyKey: kubernetes.io/hostname
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dgdn-worker
+  namespace: dgdn
+  labels:
+    app: dgdn
+    component: worker
+    version: v1.0.0
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: dgdn
+      component: worker
+  template:
+    metadata:
+      labels:
+        app: dgdn
+        component: worker
+        version: v1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8001"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: dgdn-service-account
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        fsGroup: 1001
+      containers:
+      - name: dgdn-worker
+        image: dgdn:1.0.0
+        imagePullPolicy: Always
+        command: ["python", "-m", "dgdn.worker"]
+        args: ["--config", "configs/worker.yaml"]
+        ports:
+        - containerPort: 8001
+          name: metrics
+          protocol: TCP
+        env:
+        - name: DGDN_ENV
+          value: "production"
+        - name: DGDN_LOG_LEVEL
+          value: "INFO"
+        - name: DGDN_REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: dgdn-secrets
+              key: redis-url
+        - name: DGDN_POSTGRES_URL
+          valueFrom:
+            secretKeyRef:
+              name: dgdn-secrets
+              key: postgres-url
+        volumeMounts:
+        - name: dgdn-config
+          mountPath: /app/configs
+          readOnly: true
+        - name: dgdn-models
+          mountPath: /app/models
+        - name: dgdn-logs
+          mountPath: /app/logs
+        - name: tmp
+          mountPath: /tmp
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2000m"
+            nvidia.com/gpu: "1"
+          limits:
+            memory: "8Gi"
+            cpu: "4000m"
+            nvidia.com/gpu: "1"
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8001
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 8001
+          initialDelaySeconds: 120
+          periodSeconds: 60
+          timeoutSeconds: 15
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: dgdn-config
+        configMap:
+          name: dgdn-config
+      - name: dgdn-models
+        persistentVolumeClaim:
+          claimName: dgdn-models-pvc
+      - name: dgdn-logs
+        persistentVolumeClaim:
+          claimName: dgdn-logs-pvc
+      - name: tmp
+        emptyDir: {}
+      terminationGracePeriodSeconds: 60
+      tolerations:
+      - key: "nvidia.com/gpu"
+        operator: "Exists"
+        effect: "NoSchedule"
