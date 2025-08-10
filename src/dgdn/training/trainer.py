@@ -3,7 +3,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-# from torch.utils.tensorboard import SummaryWriter  # Optional dependency
+from torch.utils.tensorboard import SummaryWriter
 import numpy as np
 import time
 import os
@@ -17,7 +17,7 @@ from ..models import DynamicGraphDiffusionNet
 from ..data import TemporalDataset, create_data_loaders
 from .losses import DGDNLoss
 from .metrics import DGDNMetrics, EdgePredictionMetrics, NodeClassificationMetrics
-from ..optimization import MixedPrecisionTrainer, MemoryOptimizer, ParallelismManager, CacheManager
+from ..optimization import MemoryOptimizer, CacheManager
 
 
 class DGDNTrainer:
@@ -117,9 +117,9 @@ class DGDNTrainer:
         self.enable_memory_optimization = optimization_config.get('memory_optimization', True)
         
         # Initialize optimization components
-        self.mixed_precision = MixedPrecisionTrainer(self.enable_mixed_precision)
+        self.mixed_precision = None  # Disabled for now
         self.memory_optimizer = MemoryOptimizer() if self.enable_memory_optimization else None
-        self.parallelism_manager = ParallelismManager(self.model)
+        self.parallelism_manager = None  # Disabled for now
         self.cache_manager = CacheManager() if self.enable_caching else None
         
         self.logger.info(f"Initialized DGDN trainer for {task} task")
