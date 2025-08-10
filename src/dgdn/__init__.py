@@ -18,8 +18,14 @@ from .data import TemporalData, TemporalDataset, TemporalGraphDataset, TemporalD
 # Temporal processing imports
 from .temporal import EdgeTimeEncoder, VariationalDiffusion
 
-# Training imports
-from .training import DGDNTrainer, DGDNLoss, DGDNMetrics
+# Training imports (optional - requires tensorboard)
+try:
+    from .training import DGDNTrainer, DGDNLoss, DGDNMetrics
+except ImportError as e:
+    # Training components not available without additional dependencies
+    DGDNTrainer = None
+    DGDNLoss = None 
+    DGDNMetrics = None
 
 # Global features - optional for basic functionality
 # from .i18n import get_translator, set_global_locale, DGDNTranslator
@@ -43,8 +49,8 @@ __all__ = [
     # Temporal processing
     "EdgeTimeEncoder",
     "VariationalDiffusion",
-    # Training
+    # Training (optional)
     "DGDNTrainer",
-    "DGDNLoss",
+    "DGDNLoss", 
     "DGDNMetrics",
 ]
