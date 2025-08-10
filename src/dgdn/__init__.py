@@ -18,8 +18,8 @@ from .data import TemporalData, TemporalDataset, TemporalGraphDataset, TemporalD
 # Temporal processing imports
 from .temporal import EdgeTimeEncoder, VariationalDiffusion
 
-# Training imports - optional for basic functionality
-# from .training import DGDNTrainer, DGDNLoss, DGDNMetrics
+# Training imports
+from .training import DGDNTrainer, DGDNLoss, DGDNMetrics
 
 # Global features - optional for basic functionality
 # from .i18n import get_translator, set_global_locale, DGDNTranslator
@@ -43,4 +43,8 @@ __all__ = [
     # Temporal processing
     "EdgeTimeEncoder",
     "VariationalDiffusion",
+    # Training
+    "DGDNTrainer",
+    "DGDNLoss",
+    "DGDNMetrics",
 ]
