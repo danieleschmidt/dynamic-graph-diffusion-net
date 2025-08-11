@@ -429,3 +429,30 @@ class OptimizedOperations:
     def cleanup(self):
         """Clean up resources."""
         self.parallel_processor.cleanup()
+
+
+class BatchProcessor:
+    """Efficient batch processing for DGDN operations."""
+    
+    def __init__(self, batch_size: int = 32, num_workers: int = 4):
+        self.batch_size = batch_size
+        self.num_workers = num_workers
+        self.logger = get_logger("dgdn.batch_processor")
+    
+    def process_batch(self, model, batch_data, return_uncertainty=False):
+        """Process a single batch through the model."""
+        model.eval()
+        with torch.no_grad():
+            return model.forward(batch_data, return_uncertainty=return_uncertainty)
+    
+    def process_dataset(self, model, dataset, callback=None):
+        """Process entire dataset in batches."""
+        results = []
+        for i, batch in enumerate(dataset):
+            result = self.process_batch(model, batch)
+            results.append(result)
+            
+            if callback:
+                callback(i, result)
+        
+        return results
