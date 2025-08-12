@@ -1,0 +1,38 @@
+{
+  "timestamp": "2025-08-12T11:52:09.814524",
+  "dependencies": {
+    "torch_available": false,
+    "required_packages": [],
+    "missing_packages": [
+      "torch"
+    ],
+    "installable": true
+  },
+  "imports": {
+    "main_package": false,
+    "submodules": {
+      "models": false,
+      "data": false,
+      "temporal": false,
+      "training": false
+    },
+    "examples": {}
+  },
+  "examples": {
+    "runnable": [
+      "basic_usage.py",
+      "global_first_demo.py",
+      "performance_benchmark.py",
+      "research_showcase.py"
+    ],
+    "broken": []
+  },
+  "issues": [
+    "Main package import failed: No module named 'torch'"
+  ],
+  "fixes_applied": [
+    "requirements.txt created",
+    "lightweight_demo.py created",
+    "DEPLOYMENT_CHECKLIST.md created"
+  ]
+}

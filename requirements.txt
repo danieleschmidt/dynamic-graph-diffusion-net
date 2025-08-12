@@ -1,0 +1,12 @@
+# Core dependencies for DGDN
+torch>=1.12.0
+torch-geometric>=2.1.0
+numpy>=1.21.0
+scipy>=1.7.0
+tqdm>=4.62.0
+matplotlib>=3.4.0
+networkx>=2.6.0
+
+# Optional dependencies for full functionality
+tensorboard>=2.13.0
+python-dotenv>=1.0.0
