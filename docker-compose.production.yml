@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  dgdn-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.production
+    container_name: dgdn-production
+    environment:
+      - PYTHON_ENV=production
+      - DGDN_LOG_LEVEL=INFO
+      - DGDN_METRICS_ENABLED=true
+      - DGDN_COMPLIANCE_MODE=strict
+      - DGDN_REGION=${DGDN_REGION:-us}
+      - DGDN_LANGUAGE=${DGDN_LANGUAGE:-en}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data:ro
+      - ./configs:/app/configs:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import dgdn; print('OK')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - dgdn-network
+
+  dgdn-monitoring:
+    image: prom/prometheus:latest
+    container_name: dgdn-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - dgdn-network
+
+  dgdn-grafana:
+    image: grafana/grafana:latest
+    container_name: dgdn-grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./monitoring/grafana/dgdn-dashboard.json:/etc/grafana/provisioning/dashboards/dgdn.json:ro
+      - grafana-data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - dgdn-network
+
+  dgdn-redis:
+    image: redis:7-alpine
+    container_name: dgdn-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - dgdn-network
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+
+volumes:
+  prometheus-data:
+  grafana-data:
+  redis-data:
+
+networks:
+  dgdn-network:
+    driver: bridge
