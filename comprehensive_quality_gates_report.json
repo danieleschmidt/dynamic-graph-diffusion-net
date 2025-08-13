@@ -1,0 +1,141 @@
+{
+  "total_gates": 9,
+  "passed_gates": 8,
+  "failed_gates": 1,
+  "critical_failures": [],
+  "pass_rate": 88.88888888888889,
+  "total_execution_time": 7.190291404724121,
+  "overall_status": "PASSED",
+  "results": {
+    "basic_functionality": {
+      "status": "passed",
+      "message": "All three generations functional",
+      "details": {
+        "generation_1": "Full execution successful",
+        "generation_2": "Initialization successful",
+        "generation_3": "Initialization successful"
+      },
+      "execution_time": 1.3043336868286133,
+      "priority": "critical"
+    },
+    "import_validation": {
+      "status": "passed",
+      "message": "All imports successful",
+      "details": "IMPORTS_SUCCESS\nNumPy available: True\nPSUtil available: True",
+      "execution_time": 0.1620025634765625,
+      "priority": "critical"
+    },
+    "security_scan": {
+      "status": "passed",
+      "message": "No security issues detected",
+      "details": {
+        "manual_checks": "passed",
+        "bandit_available": false
+      },
+      "execution_time": 4.2974419593811035,
+      "priority": "critical"
+    },
+    "performance_validation": {
+      "status": "failed",
+      "message": "Performance issues: No latency metrics found in output",
+      "details": {
+        "execution_time": 0.5940637588500977
+      },
+      "execution_time": 0.5941317081451416,
+      "priority": "high"
+    },
+    "error_handling": {
+      "status": "passed",
+      "message": "Error handling validation passed",
+      "details": "Successfully handled empty and malformed data",
+      "execution_time": 0.17252826690673828,
+      "priority": "high"
+    },
+    "memory_safety": {
+      "status": "passed",
+      "message": "Memory usage safe (16.9MB growth)",
+      "details": {
+        "memory_growth_mb": 16.9
+      },
+      "execution_time": 0.650780200958252,
+      "priority": "high"
+    },
+    "code_quality": {
+      "status": "passed",
+      "message": "Code quality good (comment ratio: 9.4%)",
+      "details": {
+        "simple_autonomous_demo.py": {
+          "lines": 481,
+          "comments": 44,
+          "functions": 19
+        },
+        "robust_autonomous_dgdn.py": {
+          "lines": 1180,
+          "comments": 105,
+          "functions": 30
+        },
+        "scalable_autonomous_dgdn.py": {
+          "lines": 1381,
+          "comments": 137,
+          "functions": 34
+        }
+      },
+      "execution_time": 0.0029296875,
+      "priority": "medium"
+    },
+    "documentation": {
+      "status": "passed",
+      "message": "Documentation good (score: 100.0/100)",
+      "details": {
+        "existing_docs": [
+          "README.md",
+          "CONTRIBUTING.md",
+          "LICENSE"
+        ],
+        "docstring_coverage": "95.2%",
+        "metrics": {
+          "README.md": {
+            "exists": true,
+            "length": 13197,
+            "lines": 501
+          },
+          "CONTRIBUTING.md": {
+            "exists": true,
+            "length": 6299,
+            "lines": 250
+          },
+          "LICENSE": {
+            "exists": true,
+            "length": 1071,
+            "lines": 22
+          }
+        }
+      },
+      "execution_time": 0.0015909671783447266,
+      "priority": "medium"
+    },
+    "type_safety": {
+      "status": "passed",
+      "message": "Type safety good (91.6% coverage)",
+      "details": {
+        "simple_autonomous_demo.py": {
+          "functions": 19,
+          "typed_functions": 17,
+          "type_coverage": 89.47368421052632
+        },
+        "robust_autonomous_dgdn.py": {
+          "functions": 30,
+          "typed_functions": 27,
+          "type_coverage": 90.0
+        },
+        "scalable_autonomous_dgdn.py": {
+          "functions": 34,
+          "typed_functions": 32,
+          "type_coverage": 94.11764705882352
+        }
+      },
+      "execution_time": 0.0017151832580566406,
+      "priority": "medium"
+    }
+  }
+}

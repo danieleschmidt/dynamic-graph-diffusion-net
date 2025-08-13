@@ -1,18 +1,18 @@
 {
   "overall_success": false,
-  "total_duration": 0.31334590911865234,
+  "total_duration": 0.21472978591918945,
   "results": {
     "import_tests": {
       "name": "Import Tests",
       "passed": false,
-      "duration": 0.04505109786987305,
+      "duration": 0.04230093955993652,
       "output": "",
       "error": "/usr/bin/python3: No module named pytest\n"
     },
     "unit_tests": {
       "name": "Unit Tests",
       "passed": false,
-      "duration": 0.046172142028808594,
+      "duration": 0.04273414611816406,
       "coverage": 0,
       "output": "",
       "error": "/usr/bin/python3: No module named pytest\n"
@@ -20,7 +20,7 @@
     "integration_tests": {
       "name": "Integration Tests",
       "passed": false,
-      "duration": 0.04738807678222656,
+      "duration": 0.04009270668029785,
       "output": "",
       "error": "/usr/bin/python3: No module named pytest\n"
     },
@@ -33,7 +33,7 @@
     "type_checking": {
       "name": "Type Checking",
       "passed": false,
-      "duration": 0.0012340545654296875,
+      "duration": 0.0011258125305175781,
       "error_count": 0,
       "output": "",
       "error": "[Errno 2] No such file or directory: 'mypy'"
@@ -41,14 +41,14 @@
     "code_formatting": {
       "name": "Code Formatting",
       "passed": false,
-      "duration": 0.005872488021850586,
+      "duration": 0.0007467269897460938,
       "output": "",
       "error": "[Errno 2] No such file or directory: 'ruff'"
     },
     "linting": {
       "name": "Linting",
       "passed": false,
-      "duration": 0.003761768341064453,
+      "duration": 0.0005614757537841797,
       "violations": 0,
       "output": "",
       "error": "[Errno 2] No such file or directory: 'ruff'"
@@ -56,7 +56,7 @@
     "security_scan": {
       "name": "Security Scan",
       "passed": true,
-      "duration": 0.0009469985961914062,
+      "duration": 0.0006861686706542969,
       "total_issues": 0,
       "high_severity": 0,
       "output": "",
@@ -65,7 +65,7 @@
     "dependency_scan": {
       "name": "Dependency Scan",
       "passed": true,
-      "duration": 0.0007779598236083984,
+      "duration": 0.0008094310760498047,
       "vulnerabilities": 0,
       "output": "",
       "error": "[Errno 2] No such file or directory: 'safety'"
@@ -73,7 +73,7 @@
     "performance_tests": {
       "name": "Performance Tests",
       "passed": false,
-      "duration": 0.1618633270263672,
+      "duration": 0.08542490005493164,
       "output": "Generation 1 failed: Traceback (most recent call last):\n  File \"/root/repo/gen1_demo.py\", line 10, in <module>\n    import torch\nModuleNotFoundError: No module named 'torch'\n\nGeneration 2 failed: Traceback (most recent call last):\n  File \"/root/repo/gen2_simple_demo.py\", line 10, in <module>\n    import torch\nModuleNotFoundError: No module named 'torch'\n\nGeneration 3 failed: Traceback (most recent call last):\n  File \"/root/repo/gen3_demo.py\", line 10, in <module>\n    import torch\nModuleNotFoundError: No module named 'torch'\n",
       "error": "Some performance tests failed"
     }
