@@ -2,13 +2,24 @@
 
 from .dgdn import DynamicGraphDiffusionNet
 from .layers import DGDNLayer, MultiHeadTemporalAttention
-from .advanced import (
-    FoundationDGDN,
-    ContinuousDGDN,
-    FederatedDGDN,
-    ExplainableDGDN,
-    MultiScaleDGDN
-)
+
+# Advanced models (optional - will be loaded if available)
+try:
+    from .advanced import (
+        FoundationDGDN,
+        ContinuousDGDN,
+        FederatedDGDN,
+        ExplainableDGDN,
+        MultiScaleDGDN
+    )
+    _ADVANCED_MODELS_AVAILABLE = True
+except ImportError:
+    _ADVANCED_MODELS_AVAILABLE = False
+    FoundationDGDN = None
+    ContinuousDGDN = None
+    FederatedDGDN = None
+    ExplainableDGDN = None
+    MultiScaleDGDN = None
 
 __all__ = [
     "DynamicGraphDiffusionNet", 
