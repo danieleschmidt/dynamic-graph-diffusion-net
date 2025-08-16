@@ -1,0 +1,35 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "DGDN Performance Dashboard",
+    "panels": [
+      {
+        "title": "Inference Time",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "dgdn_inference_time_seconds"
+          }
+        ]
+      },
+      {
+        "title": "Cache Hit Rate",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "dgdn_cache_hit_rate"
+          }
+        ]
+      },
+      {
+        "title": "Memory Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "dgdn_memory_usage_bytes"
+          }
+        ]
+      }
+    ]
+  }
+}

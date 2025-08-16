@@ -1,81 +1,84 @@
-version: '3.8'
-
+networks:
+  default:
+    driver: bridge
 services:
-  dgdn-app:
-    build: 
+  dgdn-api:
+    build:
       context: .
       dockerfile: Dockerfile.production
-    container_name: dgdn-production
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
     environment:
-      - PYTHON_ENV=production
-      - DGDN_LOG_LEVEL=INFO
-      - DGDN_METRICS_ENABLED=true
-      - DGDN_COMPLIANCE_MODE=strict
-      - DGDN_REGION=${DGDN_REGION:-us}
-      - DGDN_LANGUAGE=${DGDN_LANGUAGE:-en}
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./logs:/app/logs
-      - ./data:/app/data:ro
-      - ./configs:/app/configs:ro
-    restart: unless-stopped
+    - DGDN_ENV=production
+    - DGDN_LOG_LEVEL=INFO
+    - DGDN_CACHE_SIZE=1024
+    - DGDN_MAX_WORKERS=4
     healthcheck:
-      test: ["CMD", "python3", "-c", "import dgdn; print('OK')"]
       interval: 30s
-      timeout: 10s
       retries: 3
       start_period: 40s
-    networks:
-      - dgdn-network
-
-  dgdn-monitoring:
-    image: prom/prometheus:latest
-    container_name: dgdn-prometheus
+      test:
+      - CMD
+      - python
+      - -c
+      - import dgdn; print('Health check passed')
+      timeout: 10s
     ports:
-      - "9090:9090"
+    - 8000:8000
+    restart: unless-stopped
     volumes:
-      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - prometheus-data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
-      - '--web.enable-lifecycle'
-    networks:
-      - dgdn-network
-
-  dgdn-grafana:
-    image: grafana/grafana:latest
-    container_name: dgdn-grafana
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./monitoring/grafana/dgdn-dashboard.json:/etc/grafana/provisioning/dashboards/dgdn.json:ro
-      - grafana-data:/var/lib/grafana
+    - ./logs:/app/logs
+    - ./data:/app/data
+    - ./models:/app/models
+  grafana:
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_USERS_ALLOW_SIGN_UP=false
-    networks:
-      - dgdn-network
-
-  dgdn-redis:
-    image: redis:7-alpine
-    container_name: dgdn-redis
+    - GF_SECURITY_ADMIN_PASSWORD=dgdn-admin-2025
+    image: grafana/grafana:latest
     ports:
-      - "6379:6379"
+    - 3000:3000
+    restart: unless-stopped
     volumes:
-      - redis-data:/data
-    networks:
-      - dgdn-network
-    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
-
+    - grafana-data:/var/lib/grafana
+    - ./monitoring/grafana:/etc/grafana/provisioning
+  nginx:
+    depends_on:
+    - dgdn-api
+    image: nginx:alpine
+    ports:
+    - 80:80
+    - 443:443
+    restart: unless-stopped
+    volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf
+    - ./ssl:/etc/nginx/ssl
+  prometheus:
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+    - --storage.tsdb.path=/prometheus
+    - --web.console.libraries=/etc/prometheus/console_libraries
+    - --web.console.templates=/etc/prometheus/consoles
+    - --web.enable-lifecycle
+    image: prom/prometheus:latest
+    ports:
+    - 9090:9090
+    restart: unless-stopped
+    volumes:
+    - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+  redis:
+    command: redis-server --appendonly yes
+    image: redis:7-alpine
+    ports:
+    - 6379:6379
+    restart: unless-stopped
+    volumes:
+    - redis-data:/data
+version: '3.8'
 volumes:
-  prometheus-data:
-  grafana-data:
-  redis-data:
-
-networks:
-  dgdn-network:
-    driver: bridge
+  grafana-data: {}
+  redis-data: {}

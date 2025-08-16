@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-08-16T12:23:57.176695",
+  "performance": {
+    "total_inferences": 5,
+    "avg_inference_time": 1.7581420421600342,
+    "min_inference_time": 0.09360122680664062,
+    "max_inference_time": 5.440782308578491,
+    "p95_inference_time": 4.624072647094726,
+    "p99_inference_time": 5.277440376281739,
+    "throughput_ops_per_sec": 0.5325277486013336
+  },
+  "cache": {
+    "hit_rate": 0.16666666666666666,
+    "total_requests": 6,
+    "memory_entries": 5,
+    "memory_size_mb": 36.5922212600708,
+    "evictions": 0,
+    "hits": 1,
+    "misses": 5
+  },
+  "system": {
+    "cpu_percent": 100.0,
+    "memory_percent": 59.1,
+    "disk_percent": 75.7,
+    "available_memory_gb": 1.5750846862792969
+  },
+  "config": {
+    "enable_caching": true,
+    "cache_size_mb": 512,
+    "enable_multiprocessing": true,
+    "max_workers": 4,
+    "enable_gpu_acceleration": false,
+    "enable_auto_scaling": true,
+    "memory_threshold_percent": 80.0,
+    "cpu_threshold_percent": 80.0,
+    "enable_batch_processing": true,
+    "batch_size": 16,
+    "enable_model_parallelism": true,
+    "enable_data_parallelism": true,
+    "cache_ttl_seconds": 3600,
+    "enable_compression": true,
+    "optimization_level": "aggressive"
+  },
+  "scaling_history": []
+}
