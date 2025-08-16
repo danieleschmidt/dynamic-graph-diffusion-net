@@ -1,0 +1,67 @@
+{
+  "config": {
+    "max_nodes": 100000,
+    "max_edges": 1000000,
+    "max_inference_time": 300.0,
+    "memory_limit_gb": 16.0,
+    "enable_security_checks": true,
+    "enable_logging": true,
+    "log_level": "INFO",
+    "health_check_interval": 60,
+    "enable_monitoring": true,
+    "safe_mode": true
+  },
+  "metrics": [
+    {
+      "timestamp": "2025-08-16T12:19:57.503980",
+      "inference_time": 0.10015010833740234,
+      "memory_used_gb": 0.009601593017578125,
+      "memory_limit_exceeded": false,
+      "time_limit_exceeded": false
+    },
+    {
+      "timestamp": "2025-08-16T12:19:57.631659",
+      "inference_time": 0.12664198875427246,
+      "memory_used_gb": 0.024074554443359375,
+      "memory_limit_exceeded": false,
+      "time_limit_exceeded": false
+    },
+    {
+      "timestamp": "2025-08-16T12:19:58.619104",
+      "inference_time": 0.8157398700714111,
+      "memory_used_gb": 0.035892486572265625,
+      "memory_limit_exceeded": false,
+      "time_limit_exceeded": false
+    },
+    {
+      "timestamp": "2025-08-16T12:19:59.330919",
+      "inference_time": 0.7108871936798096,
+      "memory_used_gb": 0.2668724060058594,
+      "memory_limit_exceeded": false,
+      "time_limit_exceeded": false
+    },
+    {
+      "timestamp": "2025-08-16T12:20:03.132967",
+      "inference_time": 3.6033196449279785,
+      "memory_used_gb": 0.14528274536132812,
+      "memory_limit_exceeded": false,
+      "time_limit_exceeded": false
+    },
+    {
+      "timestamp": "2025-08-16T12:20:06.408082",
+      "inference_time": 3.274096965789795,
+      "memory_used_gb": 1.2759666442871094,
+      "memory_limit_exceeded": false,
+      "time_limit_exceeded": false
+    }
+  ],
+  "summary": {
+    "total_runs": 6,
+    "avg_inference_time": 1.4384726285934448,
+    "max_inference_time": 3.6033196449279785,
+    "avg_memory_usage": 0.2929484049479167,
+    "peak_memory_usage": 1.2759666442871094,
+    "memory_violations": 0,
+    "time_violations": 0
+  }
+}

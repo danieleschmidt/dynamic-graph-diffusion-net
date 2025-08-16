@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dgdn-api
+  name: dgdn-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dgdn-api
+  template:
+    metadata:
+      labels:
+        app: dgdn-api
+    spec:
+      containers:
+      - env:
+        - name: DGDN_ENV
+          value: production
+        - name: DGDN_LOG_LEVEL
+          value: INFO
+        image: dgdn:production
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        name: dgdn-api
+        ports:
+        - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: '2'
+            memory: 4Gi
+          requests:
+            cpu: '0.5'
+            memory: 1Gi
