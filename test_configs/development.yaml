@@ -1,0 +1,58 @@
+cache_dir: cache
+checkpoint_dir: checkpoints
+data_dir: data
+deployment:
+  cpu_limit: '2'
+  enable_autoscaling: false
+  enable_gpu: false
+  environment: development
+  gpu_memory_limit: null
+  max_replicas: 10
+  memory_limit: 4Gi
+  min_replicas: 1
+  replicas: 1
+log_dir: logs
+model:
+  activation: relu
+  aggregation: attention
+  diffusion_steps: 5
+  dropout: 0.1
+  edge_dim: 0
+  graph_norm: false
+  hidden_dim: 256
+  layer_norm: true
+  max_time: 1000.0
+  node_dim: 64
+  num_heads: 8
+  num_layers: 3
+  time_dim: 32
+  time_encoding: fourier
+monitoring:
+  alert_thresholds:
+    error_rate: 0.1
+    inference_time_ms: 1000.0
+    memory_mb: 1000.0
+  enable_health_checks: true
+  enable_performance_monitoring: true
+  log_level: DEBUG
+  metrics_retention_days: 30
+random_seed: 42
+security:
+  enable_input_sanitization: false
+  enable_integrity_checks: true
+  enable_rate_limiting: false
+  max_edges: 10000000
+  max_nodes: 1000000
+  max_requests_per_minute: 1000
+  timeout_seconds: 30.0
+training:
+  batch_size: 32
+  beta_kl: 0.1
+  beta_temporal: 0.05
+  early_stopping_patience: 5
+  epochs: 100
+  gradient_clip_norm: 1.0
+  learning_rate: 0.001
+  scheduler: cosine
+  warmup_steps: 1000
+  weight_decay: 1.0e-05
