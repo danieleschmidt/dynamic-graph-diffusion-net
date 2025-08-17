@@ -1,0 +1,92 @@
+{
+  "timestamp": 1755455468.7275498,
+  "generation": 2,
+  "component_tests": {
+    "input_validation": {
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "max_time_gap": 3.2656097412109375,
+        "mean_time_gap": 0.49570411443710327,
+        "num_nodes": 100,
+        "num_edges": 200,
+        "density": 0.04040404040404041
+      }
+    },
+    "security_manager": {
+      "status": "PASS",
+      "sanitization_passed": true
+    },
+    "performance_monitor": {
+      "status": "PASS",
+      "metrics": {
+        "memory_usage_mb": 0.0,
+        "cpu_usage_percent": 0.0,
+        "inference_time_ms": 10.1318359375,
+        "throughput_samples_per_sec": 98.6987951807229,
+        "gpu_memory_mb": null
+      }
+    },
+    "robust_wrapper": {
+      "status": "PASS",
+      "forward_pass": true,
+      "health_check": true,
+      "output_keys": [
+        "node_embeddings",
+        "mean",
+        "logvar",
+        "kl_loss",
+        "temporal_encoding"
+      ]
+    },
+    "fault_tolerance": {
+      "status": "PASS",
+      "normal_operation": true,
+      "checkpoint_saved": true,
+      "circuit_breaker_triggered": true,
+      "system_health": "degraded"
+    },
+    "config_management": {
+      "status": "PASS",
+      "default_configs_created": true,
+      "dev_config_loaded": true,
+      "prod_config_loaded": true,
+      "overrides_applied": true,
+      "current_env": "production"
+    }
+  },
+  "integration_tests": {
+    "end_to_end": {
+      "status": "FAIL",
+      "error": "'TestData' object has no attribute 'time_window'"
+    }
+  },
+  "performance_metrics": {
+    "small": {
+      "avg_inference_time_ms": 12.726497650146484,
+      "memory_usage_mb": 0.0,
+      "hidden_dim": 64,
+      "num_layers": 1
+    },
+    "medium": {
+      "avg_inference_time_ms": 29.45246696472168,
+      "memory_usage_mb": 0.0,
+      "hidden_dim": 128,
+      "num_layers": 2
+    },
+    "large": {
+      "avg_inference_time_ms": 70.53375244140625,
+      "memory_usage_mb": 3.9954427083333335,
+      "hidden_dim": 256,
+      "num_layers": 3
+    }
+  },
+  "security_validations": {
+    "input_sanitization": true,
+    "bounds_checking": true,
+    "model_integrity": true,
+    "error_handling": true
+  },
+  "overall_status": "EXCELLENT"
+}

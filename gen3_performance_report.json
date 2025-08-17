@@ -1,13 +1,13 @@
 {
-  "timestamp": "2025-08-16T12:23:57.176695",
+  "timestamp": "2025-08-17T18:39:51.623535",
   "performance": {
     "total_inferences": 5,
-    "avg_inference_time": 1.7581420421600342,
-    "min_inference_time": 0.09360122680664062,
-    "max_inference_time": 5.440782308578491,
-    "p95_inference_time": 4.624072647094726,
-    "p99_inference_time": 5.277440376281739,
-    "throughput_ops_per_sec": 0.5325277486013336
+    "avg_inference_time": 1.641165065765381,
+    "min_inference_time": 0.07627105712890625,
+    "max_inference_time": 5.162806987762451,
+    "p95_inference_time": 4.399694347381591,
+    "p99_inference_time": 5.010184459686279,
+    "throughput_ops_per_sec": 0.5733359753539717
   },
   "cache": {
     "hit_rate": 0.16666666666666666,
@@ -20,9 +20,9 @@
   },
   "system": {
     "cpu_percent": 100.0,
-    "memory_percent": 59.1,
-    "disk_percent": 75.7,
-    "available_memory_gb": 1.5750846862792969
+    "memory_percent": 43.4,
+    "disk_percent": 60.6,
+    "available_memory_gb": 2.179546356201172
   },
   "config": {
     "enable_caching": true,
