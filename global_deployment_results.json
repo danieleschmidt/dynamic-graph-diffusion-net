@@ -3,9 +3,9 @@
   "successful_deployments": 5,
   "success_rate": 1.0,
   "regions_tested": [
-    "eu-central-1",
     "eu-west-1",
     "ap-southeast-1",
+    "eu-central-1",
     "ap-northeast-1",
     "us-east-1"
   ],
@@ -17,10 +17,10 @@
   ],
   "compliance_frameworks_validated": [
     "gdpr",
-    "ccpa",
-    "pdpa"
+    "pdpa",
+    "ccpa"
   ],
-  "average_processing_time": 0.10972480773925782,
+  "average_processing_time": 0.09529929161071778,
   "detailed_results": [
     {
       "status": "success",
@@ -14976,7 +14976,7 @@
         "metrics": {
           "Nodes processed": 50,
           "Edges processed": 148,
-          "Inference time": "0.178s"
+          "Inference time": "0.130s"
         },
         "quality_metrics": {
           "uncertainty_mean": 0.17230097305342,
@@ -14999,8 +14999,8 @@
         "encryption_key_region": "us-east-1"
       },
       "processing_metadata": {
-        "timestamp": "2025-08-13T19:24:33.956924",
-        "processing_time_seconds": 0.17767834663391113,
+        "timestamp": "2025-08-20T12:12:58.385996",
+        "processing_time_seconds": 0.13044500350952148,
         "user_location": "United States",
         "data_anonymized": true
       },
@@ -24138,7 +24138,7 @@
         "metrics": {
           "Verarbeitete Knoten": 30,
           "Verarbeitete Kanten": 93,
-          "Inferenzzeit": "0.093s"
+          "Inferenzzeit": "0.081s"
         },
         "quality_metrics": {
           "uncertainty_mean": 0.17727620799839752,
@@ -24161,8 +24161,8 @@
         "encryption_key_region": "eu-central-1"
       },
       "processing_metadata": {
-        "timestamp": "2025-08-13T19:24:34.052453",
-        "processing_time_seconds": 0.093353271484375,
+        "timestamp": "2025-08-20T12:12:58.469324",
+        "processing_time_seconds": 0.08107709884643555,
         "user_location": "Germany",
         "data_anonymized": true
       },
@@ -36185,8 +36185,8 @@
         "encryption_key_region": "ap-northeast-1"
       },
       "processing_metadata": {
-        "timestamp": "2025-08-13T19:24:34.164158",
-        "processing_time_seconds": 0.10922574996948242,
+        "timestamp": "2025-08-20T12:12:58.580840",
+        "processing_time_seconds": 0.10922813415527344,
         "user_location": "Japan",
         "data_anonymized": true
       },
@@ -43824,7 +43824,7 @@
         "metrics": {
           "Nodes processed": 25,
           "Edges processed": 78,
-          "Inference time": "0.068s"
+          "Inference time": "0.067s"
         },
         "quality_metrics": {
           "uncertainty_mean": 0.20810029208894743,
@@ -43847,8 +43847,8 @@
         "encryption_key_region": "ap-southeast-1"
       },
       "processing_metadata": {
-        "timestamp": "2025-08-13T19:24:34.234646",
-        "processing_time_seconds": 0.0684823989868164,
+        "timestamp": "2025-08-20T12:12:58.649974",
+        "processing_time_seconds": 0.06730484962463379,
         "user_location": "Singapore",
         "data_anonymized": true
       },
@@ -54452,7 +54452,7 @@
         "metrics": {
           "Nœuds traités": 35,
           "Arêtes traitées": 107,
-          "Temps d'inférence": "0.100s"
+          "Temps d'inférence": "0.088s"
         },
         "quality_metrics": {
           "uncertainty_mean": 0.16375756371871014,
@@ -54475,8 +54475,8 @@
         "encryption_key_region": "eu-west-1"
       },
       "processing_metadata": {
-        "timestamp": "2025-08-13T19:24:34.336859",
-        "processing_time_seconds": 0.0998842716217041,
+        "timestamp": "2025-08-20T12:12:58.740823",
+        "processing_time_seconds": 0.08844137191772461,
         "user_location": "France",
         "data_anonymized": true
       },
