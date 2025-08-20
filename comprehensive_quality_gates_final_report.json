@@ -1,25 +1,23 @@
 {
-  "overall_status": "PASSED",
-  "duration_seconds": 7.189166,
-  "start_time": "2025-08-16T12:26:04.115912",
-  "end_time": "2025-08-16T12:26:11.305078",
-  "gates_passed": 5,
-  "gates_failed": 0,
+  "overall_status": "FAILED",
+  "duration_seconds": 7.544591,
+  "start_time": "2025-08-20T12:13:06.953739",
+  "end_time": "2025-08-20T12:13:14.498330",
+  "gates_passed": 4,
+  "gates_failed": 1,
   "total_gates": 5,
-  "success_rate": 1.0,
+  "success_rate": 0.8,
   "results": {
     "code_quality": {
-      "passed": true,
-      "timestamp": "2025-08-16T12:26:04.304814",
+      "passed": false,
+      "timestamp": "2025-08-20T12:13:06.954751",
       "details": {
-        "files_checked": 65,
-        "syntax_errors": 0,
-        "errors": []
+        "error": "[Errno 13] Permission denied: 'ruff'"
       }
     },
     "test_coverage": {
       "passed": true,
-      "timestamp": "2025-08-16T12:26:04.979725",
+      "timestamp": "2025-08-20T12:13:07.613511",
       "details": {
         "coverage_percent": 87.0,
         "estimated": true,
@@ -40,7 +38,7 @@
     },
     "security_scan": {
       "passed": true,
-      "timestamp": "2025-08-16T12:26:07.957018",
+      "timestamp": "2025-08-20T12:13:10.950285",
       "details": {
         "total_issues": 0,
         "high_severity": 0,
@@ -51,10 +49,10 @@
     },
     "performance_benchmark": {
       "passed": true,
-      "timestamp": "2025-08-16T12:26:10.971911",
+      "timestamp": "2025-08-20T12:13:14.166550",
       "details": {
-        "avg_inference_time": 0.6690902709960938,
-        "throughput_ops_per_sec": 1.4945666427211257,
+        "avg_inference_time": 0.7394193013509115,
+        "throughput_ops_per_sec": 1.3524126272779333,
         "memory_allocated_gb": 0,
         "time_limit_met": true,
         "throughput_limit_met": true,
@@ -67,7 +65,7 @@
     },
     "production_readiness": {
       "passed": true,
-      "timestamp": "2025-08-16T12:26:11.305023",
+      "timestamp": "2025-08-20T12:13:14.498293",
       "details": {
         "checks": {
           "required_files": {
@@ -98,6 +96,8 @@
       }
     }
   },
-  "errors": [],
+  "errors": [
+    "\u274c code_quality FAILED: {'error': \"[Errno 13] Permission denied: 'ruff'\"}"
+  ],
   "warnings": []
 }
