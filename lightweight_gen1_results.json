@@ -1,0 +1,43 @@
+{
+  "model_config": {
+    "node_dim": 32,
+    "hidden_dim": 64,
+    "num_layers": 2,
+    "time_dim": 32,
+    "implementation": "pure_python",
+    "dependencies": "none"
+  },
+  "data_config": {
+    "num_nodes": 30,
+    "num_edges": 78,
+    "time_span": 50.0,
+    "temporal_edges": 78
+  },
+  "training_results": {
+    "epochs_completed": 15,
+    "final_loss": 4.234275118329135,
+    "best_loss": 4.1466917697599,
+    "loss_improvement_percent": -1.1981065834640872,
+    "avg_inference_time_ms": 267.08514988422394
+  },
+  "evaluation_results": {
+    "avg_embedding_norm": 0.8070622702530852,
+    "avg_uncertainty": 63.9933937597233,
+    "temporal_consistency": 0.7150616019211493,
+    "throughput_fps": 3.7441243005591285,
+    "edge_predictions_tested": 4,
+    "node_classifications_tested": 5
+  },
+  "capabilities": {
+    "temporal_encoding": true,
+    "uncertainty_quantification": true,
+    "attention_mechanism": true,
+    "diffusion_process": true,
+    "edge_prediction": true,
+    "node_classification": true,
+    "multi_layer_processing": true
+  },
+  "generation": 1,
+  "status": "completed",
+  "timestamp": 1756041589.5709429
+}
