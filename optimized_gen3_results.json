@@ -1,0 +1,147 @@
+{
+  "model_config": {
+    "name": "OptimizedDGDN_Gen3",
+    "node_dim": 32,
+    "hidden_dim": 64,
+    "num_layers": 3,
+    "time_dim": 32
+  },
+  "optimization_config": {
+    "optimization_level": "extreme",
+    "auto_scaling_enabled": true,
+    "resource_pools": [
+      "CPU",
+      "Memory",
+      "Cache"
+    ],
+    "advanced_caching": "multi_level_adaptive",
+    "parallel_processing": "enabled"
+  },
+  "performance_report": {
+    "overall_performance": {
+      "total_operations": 25,
+      "success_rate": 1.0,
+      "average_latency_ms": 59.48620796203613,
+      "peak_latency_ms": 359.6832752227783,
+      "throughput_ops_per_sec": 0.0,
+      "memory_usage_mb": 0.2685546875
+    },
+    "optimization_status": {
+      "optimization_level": "extreme",
+      "auto_scaling_enabled": true,
+      "target_latency_ms": 100.0
+    },
+    "caching_performance": {
+      "global_cache": {
+        "hot_cache_size": 732,
+        "warm_cache_size": 0,
+        "cold_cache_size": 0,
+        "total_size": 732,
+        "hits": 11328,
+        "misses": 732,
+        "evictions": 0,
+        "hit_rate": 0.9393034825870646,
+        "unique_keys": 732
+      },
+      "computation_cache": {
+        "hot_cache_size": 1000,
+        "warm_cache_size": 0,
+        "cold_cache_size": 0,
+        "total_size": 1000,
+        "hits": 14710,
+        "misses": 1000,
+        "evictions": 0,
+        "hit_rate": 0.936346276257161,
+        "unique_keys": 1000
+      }
+    },
+    "resource_utilization": {
+      "cpu_pool": {
+        "resource_type": "cpu",
+        "available_resources": 2,
+        "in_use_resources": 0,
+        "total_capacity": 8,
+        "allocation_count": 25,
+        "deallocation_count": 25,
+        "pool_hits": 25,
+        "pool_misses": 0,
+        "pool_efficiency": 1.0
+      },
+      "memory_pool": {
+        "resource_type": "memory",
+        "available_resources": 4,
+        "in_use_resources": 0,
+        "total_capacity": 16,
+        "allocation_count": 75,
+        "deallocation_count": 75,
+        "pool_hits": 75,
+        "pool_misses": 0,
+        "pool_efficiency": 1.0
+      },
+      "cache_pool": {
+        "resource_type": "cache",
+        "available_resources": 2,
+        "in_use_resources": 0,
+        "total_capacity": 4,
+        "allocation_count": 0,
+        "deallocation_count": 0,
+        "pool_hits": 0,
+        "pool_misses": 0,
+        "pool_efficiency": 0.0
+      }
+    },
+    "model_configuration": {
+      "name": "OptimizedDGDN_Gen3",
+      "node_dim": 32,
+      "hidden_dim": 64,
+      "num_layers": 3,
+      "time_dim": 32
+    }
+  },
+  "benchmark_results": {
+    "overall_stats": {
+      "total_tests": 24,
+      "successful_tests": 24,
+      "failed_tests": 0,
+      "success_rate": 1.0,
+      "average_latency_ms": 58.386812607447304,
+      "peak_latency_ms": 359.6832752227783,
+      "average_throughput": 3620.6743914228446,
+      "peak_throughput": 5703.432145771009,
+      "average_memory_mb": 0.1708984375,
+      "peak_memory_mb": 0.2685546875
+    },
+    "dataset_count": 3,
+    "test_configurations": [
+      {
+        "stress_level": "light",
+        "num_nodes": 50,
+        "num_edges": 100,
+        "complexity_factor": 0.5
+      },
+      {
+        "stress_level": "moderate",
+        "num_nodes": 100,
+        "num_edges": 250,
+        "complexity_factor": 1.0
+      },
+      {
+        "stress_level": "heavy",
+        "num_nodes": 150,
+        "num_edges": 400,
+        "complexity_factor": 2.0
+      }
+    ]
+  },
+  "advanced_features": {
+    "intelligent_caching": true,
+    "auto_scaling": true,
+    "parallel_processing": true,
+    "resource_pooling": true,
+    "performance_monitoring": true,
+    "memory_optimization": true
+  },
+  "generation": 3,
+  "status": "completed",
+  "timestamp": 1756041997.102605
+}

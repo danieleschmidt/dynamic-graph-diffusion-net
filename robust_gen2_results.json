@@ -1,0 +1,253 @@
+{
+  "model_config": {
+    "name": "RobustDGDN_Gen2",
+    "node_dim": 32,
+    "hidden_dim": 64,
+    "num_layers": 2,
+    "time_dim": 32,
+    "robustness_features": [
+      "comprehensive_error_handling",
+      "circuit_breakers",
+      "health_monitoring",
+      "emergency_fallbacks",
+      "input_validation",
+      "graceful_degradation"
+    ]
+  },
+  "data_config": {
+    "num_nodes": 35,
+    "num_edges": 90,
+    "time_span": 75.0,
+    "edge_cases_included": true,
+    "stress_test_data": true
+  },
+  "stress_test_results": {
+    "total_tests": 20,
+    "successful_tests": 20,
+    "failed_tests": 0,
+    "degraded_tests": 0,
+    "emergency_fallbacks": 0,
+    "average_processing_time": 0.09002610445022582,
+    "error_types": {},
+    "health_progression": [
+      {
+        "iteration": 0,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 1,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 2,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 3,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 4,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 5,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 6,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 7,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 8,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 9,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 10,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 11,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 12,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 13,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 14,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 15,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 16,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 17,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 18,
+        "status": "healthy",
+        "error_count": 0
+      },
+      {
+        "iteration": 19,
+        "status": "healthy",
+        "error_count": 0
+      }
+    ],
+    "success_rate": 1.0,
+    "failure_rate": 0.0,
+    "degradation_rate": 0.0
+  },
+  "health_report": {
+    "overall_status": "healthy",
+    "overall_health": {
+      "error_count": 0,
+      "warning_count": 0,
+      "success_count": 21,
+      "recovery_attempts": 0
+    },
+    "performance": {
+      "forward_passes": 21,
+      "total_processing_time_ms": 1875.7271766662598,
+      "avg_processing_time_ms": 89.32034174601237,
+      "throughput_fps": 11.195658015321511
+    },
+    "component_health": {
+      "time_encoder": {
+        "status": "healthy",
+        "error_count": 0,
+        "cache_stats": {
+          "cache_size": 88,
+          "cache_hits": 1627,
+          "cache_misses": 88,
+          "hit_rate": 0.9486880466472303
+        }
+      },
+      "node_projection": {
+        "status": "healthy",
+        "error_count": 0,
+        "forward_count": 840
+      },
+      "processing_layer_0": {
+        "status": "healthy",
+        "error_count": 0,
+        "forward_count": 840
+      },
+      "processing_layer_1": {
+        "status": "healthy",
+        "error_count": 0,
+        "forward_count": 840
+      }
+    },
+    "error_history": [],
+    "performance_history": [
+      {
+        "timestamp": 1756041772.49715,
+        "operation": "forward_pass_12",
+        "duration": 0.08313918113708496,
+        "status": "SUCCESS"
+      },
+      {
+        "timestamp": 1756041772.5935931,
+        "operation": "forward_pass_13",
+        "duration": 0.08575558662414551,
+        "status": "SUCCESS"
+      },
+      {
+        "timestamp": 1756041772.6579287,
+        "operation": "forward_pass_14",
+        "duration": 0.05338692665100098,
+        "status": "SUCCESS"
+      },
+      {
+        "timestamp": 1756041772.752146,
+        "operation": "forward_pass_15",
+        "duration": 0.08330702781677246,
+        "status": "SUCCESS"
+      },
+      {
+        "timestamp": 1756041772.9375293,
+        "operation": "forward_pass_16",
+        "duration": 0.17463302612304688,
+        "status": "SUCCESS"
+      },
+      {
+        "timestamp": 1756041773.0313516,
+        "operation": "forward_pass_17",
+        "duration": 0.08280777931213379,
+        "status": "SUCCESS"
+      },
+      {
+        "timestamp": 1756041773.125033,
+        "operation": "forward_pass_18",
+        "duration": 0.08257508277893066,
+        "status": "SUCCESS"
+      },
+      {
+        "timestamp": 1756041773.2202191,
+        "operation": "forward_pass_19",
+        "duration": 0.08428478240966797,
+        "status": "SUCCESS"
+      },
+      {
+        "timestamp": 1756041773.2880177,
+        "operation": "forward_pass_20",
+        "duration": 0.05688834190368652,
+        "status": "SUCCESS"
+      },
+      {
+        "timestamp": 1756041773.3828092,
+        "operation": "forward_pass_21",
+        "duration": 0.08384299278259277,
+        "status": "SUCCESS"
+      }
+    ]
+  },
+  "robustness_metrics": {
+    "error_recovery_enabled": true,
+    "circuit_breaker_enabled": true,
+    "health_monitoring_enabled": true,
+    "fallback_mechanisms": true,
+    "comprehensive_validation": true
+  },
+  "generation": 2,
+  "status": "completed",
+  "timestamp": 1756041773.4781456
+}

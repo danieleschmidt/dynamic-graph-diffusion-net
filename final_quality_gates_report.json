@@ -1,0 +1,128 @@
+{
+  "overall_status": "passed",
+  "test_results": [
+    {
+      "test_name": "tensor_creation_valid",
+      "test_type": "unit",
+      "status": "passed",
+      "duration_ms": 46.11086845397949,
+      "message": "Valid tensor creation successful",
+      "details": {
+        "tensor_size": 3,
+        "optimization_level": "moderate"
+      },
+      "timestamp": 1756042256.129956
+    },
+    {
+      "test_name": "tensor_operations",
+      "test_type": "unit",
+      "status": "passed",
+      "duration_ms": 0.055789947509765625,
+      "message": "Tensor operations working correctly",
+      "details": {
+        "operations_tested": [
+          "addition",
+          "multiplication"
+        ]
+      },
+      "timestamp": 1756042256.1300159
+    },
+    {
+      "test_name": "model_initialization",
+      "test_type": "unit",
+      "status": "passed",
+      "duration_ms": 7.395029067993164,
+      "message": "Model initialization successful",
+      "details": {
+        "node_dim": 16,
+        "hidden_dim": 32
+      },
+      "timestamp": 1756042256.1374264
+    },
+    {
+      "test_name": "model_forward_pass",
+      "test_type": "unit",
+      "status": "passed",
+      "duration_ms": 41.91899299621582,
+      "message": "Model forward pass successful",
+      "details": {
+        "nodes_processed": 2,
+        "processing_time_ms": 1.8794536590576172
+      },
+      "timestamp": 1756042256.1793544
+    },
+    {
+      "test_name": "latency_performance",
+      "test_type": "performance",
+      "status": "passed",
+      "duration_ms": 136.0776424407959,
+      "message": "Average latency: 40.44ms (threshold: 200.0ms)",
+      "details": {
+        "average_latency_ms": 40.43952624003092,
+        "max_latency_ms": 109.68565940856934,
+        "min_latency_ms": 4.829645156860352,
+        "threshold_ms": 200.0,
+        "runs": 3
+      },
+      "timestamp": 1756042256.3158436
+    },
+    {
+      "test_name": "throughput_performance",
+      "test_type": "performance",
+      "status": "passed",
+      "duration_ms": 198.58384132385254,
+      "message": "Throughput: 274.3 nodes/sec (threshold: 50.0)",
+      "details": {
+        "throughput_nodes_per_sec": 274.28846463217013,
+        "nodes_processed": 50,
+        "processing_time_sec": 0.18228983879089355,
+        "threshold_nodes_per_sec": 50.0
+      },
+      "timestamp": 1756042256.5156865
+    },
+    {
+      "test_name": "input_validation",
+      "test_type": "security",
+      "status": "passed",
+      "duration_ms": 0.06341934204101562,
+      "message": "Input validation secure",
+      "details": {
+        "vulnerabilities": [],
+        "test_cases": 5
+      },
+      "timestamp": 1756042256.517282
+    },
+    {
+      "test_name": "resource_limits",
+      "test_type": "security",
+      "status": "passed",
+      "duration_ms": 284.1176986694336,
+      "message": "Resource limits adequate",
+      "details": {
+        "vulnerabilities": []
+      },
+      "timestamp": 1756042256.8014097
+    }
+  ],
+  "summary_stats": {
+    "total_tests": 8,
+    "passed_tests": 8,
+    "failed_tests": 0,
+    "warning_tests": 0,
+    "pass_rate": 1.0,
+    "critical_failures": 0,
+    "total_duration_ms": 719.1693782806396,
+    "test_suites_run": 3
+  },
+  "quality_metrics": {
+    "reliability_score": 1.0,
+    "security_score": 1.0,
+    "quality_score": 1.0,
+    "average_latency_ms": 40.43952624003092,
+    "average_throughput_nodes_per_sec": 274.28846463217013
+  },
+  "recommendations": [
+    "\u2705 All quality gates passed - ready for production deployment"
+  ],
+  "generated_at": 1756042256.8030078
+}
