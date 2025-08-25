@@ -10,7 +10,6 @@ import logging
 from typing import Dict, Any, List, Optional, Tuple, Callable
 from dataclasses import dataclass
 from collections import deque
-import pickle
 import threading
 
 @dataclass

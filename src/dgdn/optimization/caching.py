@@ -6,7 +6,6 @@ from typing import Dict, Tuple, Optional, Any, Union
 from collections import OrderedDict
 import logging
 import hashlib
-import pickle
 import time
 
 
@@ -194,14 +193,19 @@ class ComputationCache:
         self.logger = logging.getLogger(__name__)
     
     def _estimate_size(self, obj: Any) -> int:
-        """Estimate object size in bytes."""
+        """Estimate object size in bytes using safer methods."""
         if isinstance(obj, torch.Tensor):
             return obj.numel() * obj.element_size()
+        elif isinstance(obj, (str, bytes)):
+            return len(obj)
+        elif isinstance(obj, (list, tuple)):
+            return sum(self._estimate_size(item) for item in obj)
+        elif isinstance(obj, dict):
+            return sum(self._estimate_size(k) + self._estimate_size(v) for k, v in obj.items())
+        elif isinstance(obj, (int, float, bool)):
+            return 8  # Rough estimate for basic types
         else:
-            try:
-                return len(pickle.dumps(obj))
-            except:
-                return 1000  # Conservative estimate
+            return 1000  # Conservative estimate for unknown types
     
     def _make_key(self, func_name: str, args: Tuple, kwargs: Dict) -> str:
         """Create cache key from function name and arguments."""
