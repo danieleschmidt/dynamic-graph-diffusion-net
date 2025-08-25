@@ -1,7 +1,7 @@
 """Temporal graph data structures and datasets for DGDN."""
 
 import os
-import pickle
+import json
 import numpy as np
 import torch
 from torch_geometric.data import Data, Dataset
@@ -274,15 +274,52 @@ class TemporalDataset:
         return stats
     
     def save(self, path: str):
-        """Save dataset to disk."""
-        with open(path, 'wb') as f:
-            pickle.dump(self, f)
+        """Save dataset to disk securely using torch.save and JSON."""
+        # Create directory if it doesn't exist
+        os.makedirs(os.path.dirname(path) if os.path.dirname(path) else '.', exist_ok=True)
+        
+        # Save tensor data using torch.save (secure for PyTorch tensors)
+        tensor_data = {
+            'edge_index': self.data.edge_index,
+            'timestamps': self.data.timestamps,
+            'edge_attr': self.data.edge_attr,
+            'node_features': self.data.node_features,
+            'y': self.data.y
+        }
+        torch.save(tensor_data, path + '.tensors')
+        
+        # Save metadata using JSON (secure and human-readable)
+        metadata = {
+            'name': self.name,
+            'num_nodes': self.data.num_nodes,
+            'has_edge_attr': self.data.edge_attr is not None,
+            'has_node_features': self.data.node_features is not None,
+            'has_labels': self.data.y is not None
+        }
+        with open(path + '.meta.json', 'w') as f:
+            json.dump(metadata, f, indent=2)
     
     @classmethod
     def load_from_file(cls, path: str) -> 'TemporalDataset':
-        """Load dataset from disk."""
-        with open(path, 'rb') as f:
-            return pickle.load(f)
+        """Load dataset from disk securely using torch.load and JSON."""
+        # Load metadata from JSON
+        with open(path + '.meta.json', 'r') as f:
+            metadata = json.load(f)
+        
+        # Load tensor data using torch.load
+        tensor_data = torch.load(path + '.tensors', map_location='cpu')
+        
+        # Reconstruct TemporalData object
+        data = TemporalData(
+            edge_index=tensor_data['edge_index'],
+            timestamps=tensor_data['timestamps'],
+            edge_attr=tensor_data['edge_attr'],
+            node_features=tensor_data['node_features'],
+            y=tensor_data['y'],
+            num_nodes=metadata['num_nodes']
+        )
+        
+        return cls(data, name=metadata['name'])
 
 
 class TemporalGraphDataset(Dataset):
