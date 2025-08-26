@@ -1,0 +1,20 @@
+{
+  "node_dim": 64,
+  "edge_dim": 32,
+  "hidden_dim": 128,
+  "num_layers": 3,
+  "num_heads": 4,
+  "diffusion_steps": 3,
+  "time_dim": 32,
+  "dropout": 0.1,
+  "learning_rate": 0.0005,
+  "max_time": 1000.0,
+  "gradient_clipping": true,
+  "gradient_clip_value": 1.0,
+  "early_stopping": true,
+  "patience": 15,
+  "min_delta": 1e-06,
+  "checkpoint_interval": 10,
+  "validation_split": 0.2,
+  "seed": 42
+}

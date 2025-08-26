@@ -1,0 +1,106 @@
+{
+  "generation": 3,
+  "status": "completed",
+  "implementation": "scalable_optimized",
+  "architecture": "high_performance_production",
+  "training_time_seconds": 60.899441165999974,
+  "total_samples_processed": 2134,
+  "average_batch_time": 1.9491561389499963,
+  "batch_time_std": 1.5341443910882975,
+  "average_throughput": 55.01757689992096,
+  "peak_throughput": 56.4003677536583,
+  "average_latency_ms": 0.5301031900035014,
+  "p50_latency_ms": 0.05426299998134709,
+  "p95_latency_ms": 0.1016809499503779,
+  "p99_latency_ms": 0.6624225299892829,
+  "max_throughput_samples_per_sec": 49.92881111104873,
+  "throughput_efficiency": 24.964405555524365,
+  "scalability_results": {
+    "8": {
+      "total_time": 0.1638543880000043,
+      "time_per_sample": 0.020481798500000536,
+      "throughput": 48.82383741837778
+    },
+    "16": {
+      "total_time": 0.32849271999998564,
+      "time_per_sample": 0.020530794999999102,
+      "throughput": 48.7073199065133
+    },
+    "32": {
+      "total_time": 0.6100976379999565,
+      "time_per_sample": 0.01906555118749864,
+      "throughput": 52.450621026666354
+    },
+    "64": {
+      "total_time": 1.2408850360000088,
+      "time_per_sample": 0.019388828687500137,
+      "throughput": 51.57609137289939
+    },
+    "128": {
+      "total_time": 2.372445070000026,
+      "time_per_sample": 0.018534727109375204,
+      "throughput": 53.95277708157795
+    }
+  },
+  "scalability_coefficient": 5,
+  "memory_growth_mb": 0.0,
+  "memory_efficiency_mb_per_sample": 0.0,
+  "peak_memory_mb": 0.109375,
+  "cache_enabled": true,
+  "cache_hit_rate": 0.18333333333333332,
+  "parallel_workers": 2,
+  "auto_scaling_enabled": true,
+  "final_batch_size": 256,
+  "performance_stats": {
+    "parameter_init_mean_ms": 11.253177999947184,
+    "parameter_init_std_ms": 0.0,
+    "parameter_init_count": 1,
+    "temporal_encoding_mean_ms": 0.38534943262039606,
+    "temporal_encoding_std_ms": 0.467454212105405,
+    "temporal_encoding_count": 2575,
+    "node_projection_mean_ms": 0.7883544108720176,
+    "node_projection_std_ms": 0.28733179804176434,
+    "node_projection_count": 2575,
+    "attention_computation_mean_ms": 10.342052626019148,
+    "attention_computation_std_ms": 1.928626915141202,
+    "attention_computation_count": 2575,
+    "diffusion_layer_0_mean_ms": 7.94989367223307,
+    "diffusion_layer_0_std_ms": 1.9688354516471844,
+    "diffusion_layer_0_count": 2575,
+    "diffusion_layer_1_mean_ms": 7.593685985631603,
+    "diffusion_layer_1_std_ms": 1.7796054675991593,
+    "diffusion_layer_1_count": 2575,
+    "diffusion_layer_2_mean_ms": 7.4246213106790915,
+    "diffusion_layer_2_std_ms": 1.8555422290536663,
+    "diffusion_layer_2_count": 2575,
+    "output_projection_mean_ms": 0.7174459588363833,
+    "output_projection_std_ms": 0.5400507407743776,
+    "output_projection_count": 2575,
+    "batch_forward_mean_ms": 1757.9344450740732,
+    "batch_forward_std_ms": 1428.1450621019028,
+    "batch_forward_count": 27,
+    "counters": {
+      "cache_misses": 441,
+      "cache_hits": 99
+    },
+    "cache_hit_rate": 0.18333333333333332,
+    "memory_pool_size": 0,
+    "allocated_memory_mb": 0.109375,
+    "current_batch_size": 256,
+    "scaling_history": 20
+  },
+  "model_quality": {
+    "uncertainty_mean": 0.89971923828125,
+    "attention_entropy_mean": -9.999999889225291e-09,
+    "gradient_stability": 0.5207017660140991
+  },
+  "production_features": {
+    "parallel_processing": true,
+    "memory_pooling": true,
+    "intelligent_caching": true,
+    "auto_scaling": true,
+    "performance_monitoring": true,
+    "error_recovery": true,
+    "resource_cleanup": true
+  }
+}

@@ -1,0 +1,2566 @@
+{
+  "scan_metadata": {
+    "timestamp": 1756240004.731389,
+    "duration_seconds": 3.9379777908325195,
+    "project_directory": "/root/repo",
+    "scanner_version": "1.0.0"
+  },
+  "security_scan": {
+    "files_scanned": 136,
+    "total_vulnerabilities": 306,
+    "severity_breakdown": {
+      "HIGH": 74,
+      "MEDIUM": 107,
+      "LOW": 125
+    },
+    "vulnerability_types": {
+      "unsafe_eval": 60,
+      "unsafe_subprocess": 13,
+      "command_injection": 9,
+      "unsafe_file_ops": 66,
+      "unsafe_pickle": 3,
+      "dangerous_function_call": 2,
+      "unsafe_http": 29,
+      "weak_crypto": 38,
+      "insecure_random": 77,
+      "shell_injection_risk": 2,
+      "unsafe_input": 1,
+      "ssl_verification": 1,
+      "hardcoded_secrets": 1,
+      "path_traversal": 4
+    },
+    "security_score": 0,
+    "vulnerabilities": [
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates.py",
+        "line": 270,
+        "code": "if 'eval(' in content:",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates.py",
+        "line": 271,
+        "code": "security_issues.append(f'{demo_file}: Found eval() usage')",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates.py",
+        "line": 162,
+        "code": "exec(open(\"robust_autonomous_dgdn.py\").read().replace(\"if __name__ == \\\\\"__main__\\\\\":\", \"if False:\"))",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates.py",
+        "line": 185,
+        "code": "exec(open(\"scalable_autonomous_dgdn.py\").read().replace(\"if __name__ == \\\\\"__main__\\\\\":\", \"if False:\"))",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates.py",
+        "line": 272,
+        "code": "if 'exec(' in content and 'open(' in content:",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/comprehensive_quality_gates.py",
+        "line": 277,
+        "code": "if 'subprocess.call(' in content:",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/comprehensive_quality_gates.py",
+        "line": 278,
+        "code": "security_issues.append(f'{demo_file}: Found potentially unsafe subprocess.call')",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "command_injection",
+        "file": "/root/repo/comprehensive_quality_gates.py",
+        "line": 275,
+        "code": "if 'shell=True' in content:",
+        "severity": "HIGH",
+        "description": "Potential command injection vulnerability"
+      },
+      {
+        "type": "command_injection",
+        "file": "/root/repo/comprehensive_quality_gates.py",
+        "line": 276,
+        "code": "security_issues.append(f'{demo_file}: Found shell=True usage')",
+        "severity": "HIGH",
+        "description": "Potential command injection vulnerability"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/comprehensive_quality_gates.py",
+        "line": 715,
+        "code": "with open(report_file, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 411,
+        "code": "(\"eval(\", \"Dangerous eval() usage\"),",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 411,
+        "code": "(\"eval(\", \"Dangerous eval() usage\"),",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 426,
+        "code": "# Skip false positives for PyTorch model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 427,
+        "code": "if pattern == \"eval(\" and (\".eval()\" in content or \"model.eval()\" in content):",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 427,
+        "code": "if pattern == \"eval(\" and (\".eval()\" in content or \"model.eval()\" in content):",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 427,
+        "code": "if pattern == \"eval(\" and (\".eval()\" in content or \"model.eval()\" in content):",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 428,
+        "code": "continue  # PyTorch model.eval() is safe",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 481,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 412,
+        "code": "(\"exec(\", \"Dangerous exec() usage\"),",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 412,
+        "code": "(\"exec(\", \"Dangerous exec() usage\"),",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 140,
+        "code": "compile(code, str(py_file), 'exec')",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_pickle",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 415,
+        "code": "(\"pickle.load\", \"Pickle deserialization risk\"),",
+        "severity": "MEDIUM",
+        "description": "Pickle deserialization can execute arbitrary code"
+      },
+      {
+        "type": "command_injection",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 414,
+        "code": "(\"shell=True\", \"Shell command injection risk\"),",
+        "severity": "HIGH",
+        "description": "Potential command injection vulnerability"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 720,
+        "code": "with open(\"comprehensive_quality_gates_final_report.json\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "dangerous_function_call",
+        "file": "/root/repo/comprehensive_quality_gates_final.py",
+        "line": 140,
+        "code": "compile(...)",
+        "severity": "HIGH",
+        "description": "Use of dangerous function: compile"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/comprehensive_quality_gates_validation.py",
+        "line": 286,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 159,
+        "code": "CMD curl -f http://localhost:{self.config.port}{self.config.health_check_path} || exit 1",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 680,
+        "code": "self.logger.info(f\"Server running on http://0.0.0.0:{{self.port}}\")",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 681,
+        "code": "self.logger.info(f\"Health check: http://0.0.0.0:{{self.port}}{config.health_check_path}\")",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 876,
+        "code": "'health': f\"http://localhost:{deployment_config.port}{deployment_config.health_check_path}\",",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 877,
+        "code": "'metrics': f\"http://localhost:{deployment_config.port}/metrics\",",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 878,
+        "code": "'ready': f\"http://localhost:{deployment_config.port}/ready\",",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 879,
+        "code": "'info': f\"http://localhost:{deployment_config.port}/info\"",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 254,
+        "code": "with open(self.dockerfile_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 261,
+        "code": "with open(self.dockerignore_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 444,
+        "code": "with open(deployment_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 452,
+        "code": "with open(service_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 461,
+        "code": "with open(hpa_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 726,
+        "code": "with open(server_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/deployment_suite.py",
+        "line": 886,
+        "code": "with open(summary_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/deployment_verification.py",
+        "line": 20,
+        "code": "def __init__(self, base_url: str = \"http://localhost\"):",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/deployment_verification.py",
+        "line": 129,
+        "code": "(\"http://localhost:9090/-/healthy\", \"Prometheus\"),",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/deployment_verification.py",
+        "line": 130,
+        "code": "(\"http://localhost:3000/api/health\", \"Grafana\")",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/deployment_verification.py",
+        "line": 226,
+        "code": "with open(\"deployment_verification_results.json\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/enhanced_gen1_demo.py",
+        "line": 464,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/enhanced_gen1_demo.py",
+        "line": 305,
+        "code": "if np.random.random() < 0.7:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/enhanced_gen1_demo.py",
+        "line": 319,
+        "code": "if np.random.random() < 0.3:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/enhanced_gen1_demo.py",
+        "line": 322,
+        "code": "elif np.random.random() < 0.3:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/enhanced_gen1_demo.py",
+        "line": 307,
+        "code": "community = np.random.choice(4)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/enhanced_gen1_demo.py",
+        "line": 308,
+        "code": "source = np.random.choice(communities[community])",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/enhanced_gen1_demo.py",
+        "line": 309,
+        "code": "target = np.random.choice(communities[community])",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/enhanced_gen1_demo.py",
+        "line": 312,
+        "code": "source = np.random.choice(num_nodes)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/enhanced_gen1_demo.py",
+        "line": 313,
+        "code": "target = np.random.choice(num_nodes)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/enhanced_gen1_demo.py",
+        "line": 664,
+        "code": "with open(results_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/final_autonomous_sdlc_completion.py",
+        "line": 437,
+        "code": "with open(\"TERRAGON_AUTONOMOUS_SDLC_FINAL_COMPLETION.json\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/final_quality_gates.py",
+        "line": 804,
+        "code": "with open(report_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen1_core_implementation.py",
+        "line": 201,
+        "code": "edge_index = np.random.randint(0, self.num_nodes, (2, self.num_edges))",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen1_core_implementation.py",
+        "line": 330,
+        "code": "with open(results_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen1_core_validation.py",
+        "line": 74,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen1_enhanced_demo.py",
+        "line": 195,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen1_enhanced_demo.py",
+        "line": 284,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen1_minimal_implementation.py",
+        "line": 394,
+        "code": "with open(results_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen1_progressive_enhancement.py",
+        "line": 277,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen1_progressive_enhancement.py",
+        "line": 310,
+        "code": "with open(results_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen1_simple_validation.py",
+        "line": 91,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen1_simple_validation.py",
+        "line": 138,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen1_simple_validation.py",
+        "line": 182,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen2_completion_report.py",
+        "line": 408,
+        "code": "with open(report_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen2_config_management.py",
+        "line": 401,
+        "code": "with open(config_file, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen2_fault_tolerance.py",
+        "line": 330,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen2_robust_implementation.py",
+        "line": 372,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen2_robust_implementation.py",
+        "line": 481,
+        "code": "with open(filepath, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen2_robust_validation.py",
+        "line": 97,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen2_robust_validation.py",
+        "line": 231,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen2_robust_validation.py",
+        "line": 286,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen2_security_enhancements.py",
+        "line": 154,
+        "code": "with open(filepath, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen3_demo.py",
+        "line": 488,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/gen3_demo.py",
+        "line": 310,
+        "code": "oom_occurred = np.random.random() < 0.1  # 10% chance of OOM",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen3_performance_optimization.py",
+        "line": 522,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/gen3_performance_optimization.py",
+        "line": 601,
+        "code": "return hashlib.md5('|'.join(key_components).encode()).hexdigest()",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/gen3_performance_optimization.py",
+        "line": 613,
+        "code": "return hashlib.md5('|'.join(key_components).encode()).hexdigest()",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen3_scaling_implementation.py",
+        "line": 447,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_pickle",
+        "file": "/root/repo/gen3_scaling_implementation.py",
+        "line": 117,
+        "code": "return pickle.loads(serialized)",
+        "severity": "MEDIUM",
+        "description": "Pickle deserialization can execute arbitrary code"
+      },
+      {
+        "type": "unsafe_pickle",
+        "file": "/root/repo/gen3_scaling_implementation.py",
+        "line": 119,
+        "code": "return pickle.loads(compressed_data)",
+        "severity": "MEDIUM",
+        "description": "Pickle deserialization can execute arbitrary code"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/gen3_scaling_implementation.py",
+        "line": 489,
+        "code": "hasher = hashlib.md5()",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen3_scaling_implementation.py",
+        "line": 829,
+        "code": "with open(\"gen3_performance_report.json\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen3_scaling_validation.py",
+        "line": 73,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen3_scaling_validation.py",
+        "line": 192,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen3_scaling_validation.py",
+        "line": 343,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/gen3_scaling_validation.py",
+        "line": 398,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/global_dgdn_deployment.py",
+        "line": 790,
+        "code": "with open('global_deployment_results.json', 'w', encoding='utf-8') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/global_implementation_validation.py",
+        "line": 237,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/lightweight_gen1_demo.py",
+        "line": 441,
+        "code": "if random.random() < 0.4:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/lightweight_gen1_demo.py",
+        "line": 444,
+        "code": "elif random.random() < 0.4:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/lightweight_gen1_demo.py",
+        "line": 434,
+        "code": "source = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/lightweight_gen1_demo.py",
+        "line": 435,
+        "code": "target = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/lightweight_gen1_demo.py",
+        "line": 761,
+        "code": "with open(results_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/optimized_gen3_demo.py",
+        "line": 1115,
+        "code": "idx = random.randint(0, 31)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/optimized_gen3_demo.py",
+        "line": 1137,
+        "code": "source = random.randint(0, min(10, num_nodes - 1))",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/optimized_gen3_demo.py",
+        "line": 1138,
+        "code": "target = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/optimized_gen3_demo.py",
+        "line": 1141,
+        "code": "source = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/optimized_gen3_demo.py",
+        "line": 1142,
+        "code": "target = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/optimized_gen3_demo.py",
+        "line": 1504,
+        "code": "with open(results_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 500,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 248,
+        "code": "proxy_pass http://dgdn_backend/health;",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 255,
+        "code": "proxy_pass http://dgdn_backend/;",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 721,
+        "code": "if curl -f http://localhost/health > /dev/null 2>&1; then",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 729,
+        "code": "if curl -f http://localhost:9090/-/healthy > /dev/null 2>&1; then",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 735,
+        "code": "if curl -f http://localhost:3000/api/health > /dev/null 2>&1; then",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 744,
+        "code": "echo \"\ud83d\udce1 API:        http://localhost/api/\"",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 745,
+        "code": "echo \"\ud83d\udcca Monitoring: http://localhost:3000 (admin/dgdn-admin-2025)\"",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 746,
+        "code": "echo \"\ud83d\udcc8 Metrics:    http://localhost:9090\"",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 747,
+        "code": "echo \"\ud83d\udcda Docs:       http://localhost/docs\"",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 748,
+        "code": "echo \"\u2764\ufe0f Health:     http://localhost/health\"",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 797,
+        "code": "curl -s http://localhost/health | jq '.' || echo \"\u274c Health check failed\"",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 801,
+        "code": "curl -s http://localhost/metrics | grep dgdn || echo \"\u274c Metrics unavailable\"",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 951,
+        "code": "def __init__(self, base_url: str = \"http://localhost\"):",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 1060,
+        "code": "(\"http://localhost:9090/-/healthy\", \"Prometheus\"),",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 1061,
+        "code": "(\"http://localhost:3000/api/health\", \"Grafana\")",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 1246,
+        "code": "\"view_monitoring\": \"http://localhost:3000 (Grafana)\"",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 1292,
+        "code": "print(f\"\ud83d\udcca Monitor at http://localhost:3000\")",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 101,
+        "code": "with open(\"Dockerfile.production\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 211,
+        "code": "with open(\"docker-compose.production.yml\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 301,
+        "code": "with open(\"nginx.conf\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 338,
+        "code": "with open(monitoring_dir / \"prometheus.yml\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 375,
+        "code": "with open(grafana_dir / \"dgdn-dashboard.json\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 683,
+        "code": "with open(\"production_server.py\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 754,
+        "code": "with open(\"deploy.sh\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 821,
+        "code": "with open(\"manage.sh\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 876,
+        "code": "with open(k8s_dir / \"deployment.yaml\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 891,
+        "code": "with open(k8s_dir / \"service.yaml\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 919,
+        "code": "with open(k8s_dir / \"hpa.yaml\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 1157,
+        "code": "with open(\"deployment_verification_results.json\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 1165,
+        "code": "with open(\"deployment_verification.py\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 1216,
+        "code": "with open(\"requirements.txt\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/production_deployment_suite.py",
+        "line": 1278,
+        "code": "with open(\"production_deployment_report.json\", \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/production_server.py",
+        "line": 114,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/quality_gates.py",
+        "line": 446,
+        "code": "with open(output_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/quality_gates_advanced.py",
+        "line": 31,
+        "code": "exec(import_statement)",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "dangerous_function_call",
+        "file": "/root/repo/quality_gates_advanced.py",
+        "line": 31,
+        "code": "exec(...)",
+        "severity": "HIGH",
+        "description": "Use of dangerous function: exec"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 251,
+        "code": "if random.random() < 0.1:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 274,
+        "code": "interval = (random.random() ** -0.5) * 0.1  # Power-law intervals",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 346,
+        "code": "if random.random() < 0.3:  # Dense intra-community connections",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 426,
+        "code": "if random.random() < 0.3:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 428,
+        "code": "elif random.random() < 0.6:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 480,
+        "code": "if i != j and random.random() < 0.5:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 488,
+        "code": "if random.random() < 0.1:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 125,
+        "code": "'convergence_epochs': random.randint(20, 100)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 214,
+        "code": "edge_index.extend([(random.randint(0, num_nodes-1), random.randint(0, num_nodes-1))",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 214,
+        "code": "edge_index.extend([(random.randint(0, num_nodes-1), random.randint(0, num_nodes-1))",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 252,
+        "code": "edge_index.append((i, random.randint(0, num_nodes-1)))",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 357,
+        "code": "i = random.randint(start1, end1 - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 358,
+        "code": "j = random.randint(start2, end2 - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 416,
+        "code": "j = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/research_validation_suite.py",
+        "line": 489,
+        "code": "j = random.randint(level, level + nodes_per_level - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/robust_autonomous_dgdn.py",
+        "line": 315,
+        "code": "return hashlib.md5(str(args).encode()).hexdigest()",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_autonomous_dgdn.py",
+        "line": 458,
+        "code": "source = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_autonomous_dgdn.py",
+        "line": 459,
+        "code": "target = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_autonomous_dgdn.py",
+        "line": 1017,
+        "code": "node_idx = random.randint(0, len(test_data['node_features']) - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_autonomous_dgdn.py",
+        "line": 1018,
+        "code": "feat_idx = random.randint(0, len(test_data['node_features'][node_idx]) - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_autonomous_dgdn.py",
+        "line": 1021,
+        "code": "error_type = random.choice(['inf', 'nan', 'extreme'])",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_autonomous_dgdn.py",
+        "line": 1027,
+        "code": "test_data['node_features'][node_idx][feat_idx] = random.choice([1e10, -1e10])",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_gen2_demo.py",
+        "line": 951,
+        "code": "source = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_gen2_demo.py",
+        "line": 952,
+        "code": "target = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_gen2_demo.py",
+        "line": 1016,
+        "code": "corrupt_idx = random.randint(0, len(test_data['nodes']) - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/robust_gen2_demo.py",
+        "line": 1244,
+        "code": "with open(results_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_mtgl_demo.py",
+        "line": 376,
+        "code": "src = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/robust_mtgl_demo.py",
+        "line": 377,
+        "code": "tgt = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/scalable_autonomous_dgdn.py",
+        "line": 367,
+        "code": "return hashlib.md5(str(item).encode()).hexdigest()[:16]",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/scalable_autonomous_dgdn.py",
+        "line": 520,
+        "code": "rand_val = random.random()",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/scalable_autonomous_dgdn.py",
+        "line": 537,
+        "code": "timestamp = base_time + (-math.log(random.random()) * 2.0)  # Exponential distribution (bursty pattern)",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/scalable_autonomous_dgdn.py",
+        "line": 542,
+        "code": "weight = (0.1 + random.random()) * time_factor * degree_factor",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/scalable_autonomous_dgdn.py",
+        "line": 530,
+        "code": "target = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/scalable_autonomous_dgdn.py",
+        "line": 532,
+        "code": "target = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/scalable_autonomous_dgdn.py",
+        "line": 535,
+        "code": "time_cluster = random.randint(0, 9)  # 10 time clusters",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/simple_autonomous_demo.py",
+        "line": 132,
+        "code": "source = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/simple_autonomous_demo.py",
+        "line": 133,
+        "code": "target = random.randint(0, num_nodes - 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "command_injection",
+        "file": "/root/repo/verify_critical_fixes.py",
+        "line": 14,
+        "code": "result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=120)",
+        "severity": "HIGH",
+        "description": "Potential command injection vulnerability"
+      },
+      {
+        "type": "shell_injection_risk",
+        "file": "/root/repo/verify_critical_fixes.py",
+        "line": 14,
+        "code": "subprocess.run(..., shell=True)",
+        "severity": "HIGH",
+        "description": "Subprocess call with shell=True is dangerous"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen1_fixed_implementation.py",
+        "line": 192,
+        "code": "edge_index = np.random.randint(0, self.num_nodes, (2, self.num_edges))",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen1_fixed_implementation.py",
+        "line": 330,
+        "code": "with open(results_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen2_robust_enhanced.py",
+        "line": 530,
+        "code": "src, tgt = np.random.choice(self.num_nodes, 2, replace=False)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen2_robust_enhanced.py",
+        "line": 546,
+        "code": "anomaly_indices = np.random.choice(self.num_nodes, size=max(1, self.num_nodes//20), replace=False)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen2_robust_enhanced.py",
+        "line": 551,
+        "code": "anomaly_edges = np.random.choice(len(timestamps), size=max(1, len(timestamps)//10), replace=False)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen2_robust_enhanced.py",
+        "line": 99,
+        "code": "with open(path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen2_robust_enhanced.py",
+        "line": 167,
+        "code": "with open(checkpoint_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen2_robust_enhanced.py",
+        "line": 174,
+        "code": "with open(best_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen2_robust_enhanced.py",
+        "line": 791,
+        "code": "with open(results_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen2_working_robust.py",
+        "line": 322,
+        "code": "src, dst = np.random.choice(self.num_nodes, 2, replace=False)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen2_working_robust.py",
+        "line": 332,
+        "code": "anomaly_nodes = np.random.choice(self.num_nodes, size=max(1, self.num_nodes//20), replace=False)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen2_working_robust.py",
+        "line": 576,
+        "code": "with open(results_file, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/gen3_scalable_optimized.py",
+        "line": 208,
+        "code": "hasher = hashlib.md5()",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/gen3_scalable_optimized.py",
+        "line": 602,
+        "code": "if np.random.random() < 0.7 and self.num_nodes >= 8:  # 70% intra-cluster",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen3_scalable_optimized.py",
+        "line": 603,
+        "code": "cluster_id = np.random.randint(0, 4)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen3_scalable_optimized.py",
+        "line": 607,
+        "code": "src, dst = np.random.choice(range(cluster_start, cluster_end), 2, replace=False)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen3_scalable_optimized.py",
+        "line": 609,
+        "code": "src, dst = np.random.choice(self.num_nodes, 2, replace=False)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/gen3_scalable_optimized.py",
+        "line": 611,
+        "code": "src, dst = np.random.choice(self.num_nodes, 2, replace=False)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/gen3_scalable_optimized.py",
+        "line": 828,
+        "code": "with open(results_file, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_input",
+        "file": "/root/repo/security_quality_gates.py",
+        "line": 158,
+        "code": "'unsafe_input': 'Direct use of input() without validation',",
+        "severity": "LOW",
+        "description": "Direct use of input() without validation"
+      },
+      {
+        "type": "command_injection",
+        "file": "/root/repo/security_quality_gates.py",
+        "line": 41,
+        "code": "'command_injection': [r'shell=True', r'os\\.system.*format'],",
+        "severity": "HIGH",
+        "description": "Potential command injection vulnerability"
+      },
+      {
+        "type": "command_injection",
+        "file": "/root/repo/security_quality_gates.py",
+        "line": 117,
+        "code": "# Check for subprocess with shell=True",
+        "severity": "HIGH",
+        "description": "Potential command injection vulnerability"
+      },
+      {
+        "type": "command_injection",
+        "file": "/root/repo/security_quality_gates.py",
+        "line": 129,
+        "code": "'code': f\"subprocess.{node.func.attr}(..., shell=True)\",",
+        "severity": "HIGH",
+        "description": "Potential command injection vulnerability"
+      },
+      {
+        "type": "command_injection",
+        "file": "/root/repo/security_quality_gates.py",
+        "line": 131,
+        "code": "'description': 'Subprocess call with shell=True is dangerous'",
+        "severity": "HIGH",
+        "description": "Potential command injection vulnerability"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/security_quality_gates.py",
+        "line": 48,
+        "code": "'unsafe_http': [r'http://', r'urllib\\.request\\.urlopen'],",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "ssl_verification",
+        "file": "/root/repo/security_quality_gates.py",
+        "line": 49,
+        "code": "'ssl_verification': [r'verify=False', r'ssl\\._create_unverified_context'],",
+        "severity": "LOW",
+        "description": "SSL certificate verification disabled"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/security_quality_gates.py",
+        "line": 758,
+        "code": "with open(results_file, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/benchmarks/benchmark_suite.py",
+        "line": 209,
+        "code": "with open(filename, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/benchmarks/benchmark_suite.py",
+        "line": 216,
+        "code": "with open(latest_file, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/examples/basic_usage.py",
+        "line": 145,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "hardcoded_secrets",
+        "file": "/root/repo/examples/research_showcase.py",
+        "line": 360,
+        "code": "encrypted_model.save_encrypted(\"secure_model.enc\", password=\"dgdn_research_2025\")",
+        "severity": "HIGH",
+        "description": "Hardcoded credentials found in source code"
+      },
+      {
+        "type": "command_injection",
+        "file": "/root/repo/scripts/collect_metrics.py",
+        "line": 133,
+        "code": "shell=True,",
+        "severity": "HIGH",
+        "description": "Potential command injection vulnerability"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/scripts/collect_metrics.py",
+        "line": 425,
+        "code": "with open(output_path, \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/scripts/collect_metrics.py",
+        "line": 439,
+        "code": "with open(self.config_path, \"w\") as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "shell_injection_risk",
+        "file": "/root/repo/scripts/collect_metrics.py",
+        "line": 131,
+        "code": "subprocess.run(..., shell=True)",
+        "severity": "HIGH",
+        "description": "Subprocess call with shell=True is dangerous"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/scripts/generate_benchmark_summary.py",
+        "line": 214,
+        "code": "with open(output_file, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/scripts/generate_benchmark_summary.py",
+        "line": 221,
+        "code": "with open(output_file, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "path_traversal",
+        "file": "/root/repo/scripts/generate_benchmark_summary.py",
+        "line": 205,
+        "code": "- [Benchmark Configuration](../pyproject.toml)",
+        "severity": "LOW",
+        "description": "Potential path traversal vulnerability"
+      },
+      {
+        "type": "path_traversal",
+        "file": "/root/repo/scripts/generate_benchmark_summary.py",
+        "line": 206,
+        "code": "- [Performance Monitoring](../monitoring/README.md)",
+        "severity": "LOW",
+        "description": "Potential path traversal vulnerability"
+      },
+      {
+        "type": "path_traversal",
+        "file": "/root/repo/scripts/generate_benchmark_summary.py",
+        "line": 207,
+        "code": "- [GitHub Actions Workflows](../.github/workflows/)",
+        "severity": "LOW",
+        "description": "Potential path traversal vulnerability"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/scripts/security-scan.py",
+        "line": 183,
+        "code": "with open(json_report_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/scripts/security-scan.py",
+        "line": 297,
+        "code": "with open(output_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/update_dependencies.py",
+        "line": 58,
+        "code": "except subprocess.CalledProcessError as e:",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/update_dependencies.py",
+        "line": 88,
+        "code": "except subprocess.CalledProcessError as e:",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/update_dependencies.py",
+        "line": 155,
+        "code": "except subprocess.CalledProcessError as e:",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/update_dependencies.py",
+        "line": 177,
+        "code": "except subprocess.CalledProcessError as e:",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/update_dependencies.py",
+        "line": 210,
+        "code": "except subprocess.CalledProcessError as e:",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/update_dependencies.py",
+        "line": 266,
+        "code": "except subprocess.CalledProcessError as e:",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/update_dependencies.py",
+        "line": 282,
+        "code": "except subprocess.CalledProcessError as e:",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/scripts/update_dependencies.py",
+        "line": 206,
+        "code": "with open(self.requirements_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/scripts/update_dependencies.py",
+        "line": 396,
+        "code": "with open(output_file, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/value-discovery.py",
+        "line": 177,
+        "code": "except (FileNotFoundError, json.JSONDecodeError, subprocess.CalledProcessError):",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/value-discovery.py",
+        "line": 216,
+        "code": "except (FileNotFoundError, json.JSONDecodeError, subprocess.CalledProcessError):",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/value-discovery.py",
+        "line": 264,
+        "code": "except (FileNotFoundError, json.JSONDecodeError, subprocess.CalledProcessError):",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_subprocess",
+        "file": "/root/repo/scripts/value-discovery.py",
+        "line": 309,
+        "code": "except (FileNotFoundError, json.JSONDecodeError, subprocess.CalledProcessError):",
+        "severity": "LOW",
+        "description": "Subprocess calls may allow command injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/scripts/value-discovery.py",
+        "line": 85,
+        "code": "with open(self.metrics_file, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/adaptive/learning.py",
+        "line": 301,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/adaptive/learning.py",
+        "line": 379,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 243,
+        "code": "if random.random() < self.mutation_rate:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 372,
+        "code": "if random.random() < 0.5:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 384,
+        "code": "if random.random() < 0.3:  # 30% chance to mutate each parameter",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 584,
+        "code": "if random.random() < self.crossover_rate:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 590,
+        "code": "if random.random() < self.mutation_rate:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 609,
+        "code": "if random.random() < 0.5:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 621,
+        "code": "if random.random() < 0.1:  # 10% mutation rate per parameter",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 192,
+        "code": "new_value = random.randint(int(low), int(high))",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 195,
+        "code": "perturbation = random.randint(-2, 2)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 396,
+        "code": "mutation = random.randint(-1, 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 543,
+        "code": "individual[param_name] = random.randint(low, high)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 635,
+        "code": "mutation = random.randint(-1, 1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 201,
+        "code": "new_value = random.choice(hp_config.categories)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 233,
+        "code": "parent1_idx = random.choice(elite_indices)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 234,
+        "code": "parent2_idx = random.choice(elite_indices)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 404,
+        "code": "mutated[name] = random.choice(hp_config.categories)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 547,
+        "code": "individual[param_name] = random.choice(choices)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 550,
+        "code": "individual[param_name] = random.choice([True, False])",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/adaptive/optimization.py",
+        "line": 643,
+        "code": "mutated[param_name] = random.choice(choices)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/src/dgdn/data/datasets.py",
+        "line": 299,
+        "code": "with open(path + '.meta.json', 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/distributed/distributed_training.py",
+        "line": 489,
+        "code": "'loss': np.random.random(),",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/distributed/distributed_training.py",
+        "line": 490,
+        "code": "'accuracy': np.random.random()",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/distributed/distributed_training.py",
+        "line": 388,
+        "code": "return np.random.choice(",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/distributed/edge_computing.py",
+        "line": 77,
+        "code": "teacher.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/distributed/edge_computing.py",
+        "line": 118,
+        "code": "num_nodes = np.random.randint(10, 50)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/distributed/edge_computing.py",
+        "line": 119,
+        "code": "num_edges = np.random.randint(20, num_nodes * 2)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/enterprise/deployment.py",
+        "line": 431,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_http",
+        "file": "/root/repo/src/dgdn/enterprise/deployment.py",
+        "line": 231,
+        "code": "f\"http://dgdn-{config['deployment']['environment']}.yourcompany.com/predict\"",
+        "severity": "LOW",
+        "description": "Use of insecure HTTP protocol"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/src/dgdn/i18n/global_translator.py",
+        "line": 174,
+        "code": "with open(lang_file, 'w', encoding='utf-8') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/optimization/computation.py",
+        "line": 385,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/optimization/computation.py",
+        "line": 444,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/optimization/computation.py",
+        "line": 364,
+        "code": "compiled_model = torch.compile(model, mode=\"max-autotune\")",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/optimization/performance.py",
+        "line": 83,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/optimization/performance.py",
+        "line": 99,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/optimization/performance.py",
+        "line": 259,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/optimization/performance.py",
+        "line": 382,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/optimization/performance.py",
+        "line": 73,
+        "code": "self.model = torch.compile(self.model)",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/research/benchmarks.py",
+        "line": 109,
+        "code": "model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/src/dgdn/research/benchmarks.py",
+        "line": 345,
+        "code": "with open(json_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/research/experimental_framework.py",
+        "line": 366,
+        "code": "return hashlib.md5(config_str.encode()).hexdigest()[:8]",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/research/experimental_framework.py",
+        "line": 300,
+        "code": "if len(self.trial_history) > 5 and random.random() < 0.3:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/research/experimental_framework.py",
+        "line": 314,
+        "code": "if len(self.trial_history) > 5 and random.random() < 0.3:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/experimental_framework.py",
+        "line": 306,
+        "code": "noise = random.randint(-2, 2)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/experimental_framework.py",
+        "line": 309,
+        "code": "suggested[param_name] = random.randint(param_min, param_max)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/experimental_framework.py",
+        "line": 312,
+        "code": "suggested[param_name] = random.randint(param_min, param_max)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/experimental_framework.py",
+        "line": 305,
+        "code": "base_value = random.choice(best_values)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/experimental_framework.py",
+        "line": 319,
+        "code": "base_value = random.choice(best_values)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/experimental_framework.py",
+        "line": 329,
+        "code": "suggested[param_name] = random.choice(choices)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/research/meta_temporal_learning.py",
+        "line": 1207,
+        "code": "'edge_index': [(i, j) for i in range(25) for j in range(25) if i != j and random.random() < 0.1],",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/meta_temporal_learning.py",
+        "line": 1135,
+        "code": "'edge_index': [(i, (i+1) % 50) for i in range(50)] + [(random.randint(0, 49), random.randint(0, 49)) for _ in range(30)],",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/meta_temporal_learning.py",
+        "line": 1135,
+        "code": "'edge_index': [(i, (i+1) % 50) for i in range(50)] + [(random.randint(0, 49), random.randint(0, 49)) for _ in range(30)],",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/meta_temporal_learning.py",
+        "line": 1153,
+        "code": "'edge_index': [(random.randint(0, 39), random.randint(0, 39)) for _ in range(120)],  # Random connections",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/meta_temporal_learning.py",
+        "line": 1153,
+        "code": "'edge_index': [(random.randint(0, 39), random.randint(0, 39)) for _ in range(120)],  # Random connections",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/meta_temporal_learning.py",
+        "line": 1162,
+        "code": "'edge_index': [(i, random.choice([j for j in range(60) if j != i])) for i in range(60) for _ in range(2)],",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/research/quantum_dgdn.py",
+        "line": 216,
+        "code": "measurement = 0 if random.random() < prob_0 else 1",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "weak_crypto",
+        "file": "/root/repo/src/dgdn/research/quantum_dgdn.py",
+        "line": 604,
+        "code": "if random.random() < noise_level:",
+        "severity": "MEDIUM",
+        "description": "Use of weak cryptographic functions"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/quantum_dgdn.py",
+        "line": 932,
+        "code": "src, tgt = random.randint(0, num_nodes-1), random.randint(0, num_nodes-1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/quantum_dgdn.py",
+        "line": 932,
+        "code": "src, tgt = random.randint(0, num_nodes-1), random.randint(0, num_nodes-1)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/research/quantum_dgdn.py",
+        "line": 606,
+        "code": "gate_choice = random.choice(['x', 'y', 'z'])",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "insecure_random",
+        "file": "/root/repo/src/dgdn/scaling/load_balancing.py",
+        "line": 85,
+        "code": "return random.choice(servers)",
+        "severity": "LOW",
+        "description": "Use of predictable random number generation"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/training/trainer.py",
+        "line": 347,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/training/trainer.py",
+        "line": 497,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/training/trainer.py",
+        "line": 566,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/src/dgdn/utils/config.py",
+        "line": 152,
+        "code": "with open(config_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/utils/health_checks.py",
+        "line": 285,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_eval",
+        "file": "/root/repo/src/dgdn/utils/health_checks.py",
+        "line": 457,
+        "code": "self.model.eval()",
+        "severity": "HIGH",
+        "description": "Use of eval/exec can lead to code injection"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/src/dgdn/utils/monitoring.py",
+        "line": 164,
+        "code": "with open(path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "unsafe_file_ops",
+        "file": "/root/repo/src/dgdn/utils/security.py",
+        "line": 273,
+        "code": "with open(hash_path, 'w') as f:",
+        "severity": "MEDIUM",
+        "description": "Unsafe file operations detected"
+      },
+      {
+        "type": "path_traversal",
+        "file": "/root/repo/src/dgdn/utils/security.py",
+        "line": 114,
+        "code": "suspicious_patterns = ['../', '..\\\\', '~/', '/etc/', '/proc/', 'C:\\\\Windows\\\\']",
+        "severity": "LOW",
+        "description": "Potential path traversal vulnerability"
+      }
+    ],
+    "scan_timestamp": 1756240003.2174816
+  },
+  "code_quality": {
+    "files_analyzed": 136,
+    "average_complexity": 8.058823529411764,
+    "max_complexity": 40.0,
+    "average_maintainability": 78.3970588235294,
+    "complexity_score": 0.0,
+    "maintainability_score": 78.3970588235294,
+    "overall_quality_score": 39.1985294117647,
+    "analysis_timestamp": 1756240004.7296307
+  },
+  "dependency_scan": {
+    "packages_scanned": 21,
+    "vulnerable_packages": 0,
+    "vulnerabilities": [],
+    "dependency_score": 100
+  },
+  "license_check": {
+    "has_license": true,
+    "license_type": "MIT",
+    "license_files": [
+      "/root/repo/LICENSE"
+    ],
+    "compliance_score": 100,
+    "is_approved": true
+  },
+  "quality_gates": {
+    "security_gate": {
+      "passed": false,
+      "score": 0,
+      "details": {
+        "high_vulnerabilities": 74,
+        "medium_vulnerabilities": 107,
+        "total_vulnerabilities": 306
+      }
+    },
+    "quality_gate": {
+      "passed": false,
+      "score": 39.1985294117647,
+      "details": {
+        "max_complexity": 40.0,
+        "maintainability_score": 78.3970588235294
+      }
+    },
+    "dependency_gate": {
+      "passed": true,
+      "score": 100,
+      "details": {
+        "vulnerable_packages": 0,
+        "packages_scanned": 21
+      }
+    },
+    "license_gate": {
+      "passed": true,
+      "score": 100,
+      "details": {
+        "has_license": true,
+        "license_type": "MIT",
+        "is_approved": true
+      }
+    },
+    "gates_passed_count": 2,
+    "total_gates": 4,
+    "overall_passed": false,
+    "overall_score": 41.75955882352941
+  },
+  "overall_assessment": {
+    "security_passed": false,
+    "quality_passed": false,
+    "dependency_passed": true,
+    "license_passed": true,
+    "all_gates_passed": false,
+    "production_ready": false,
+    "overall_score": 41.75955882352941,
+    "risk_level": "CRITICAL"
+  },
+  "recommendations": [
+    "\u26a0\ufe0f CRITICAL: Fix all HIGH severity security vulnerabilities immediately",
+    "\u26a0\ufe0f Address MEDIUM severity security vulnerabilities",
+    "\ud83d\udd12 Improve overall security posture - consider security code review",
+    "\ud83d\udcca Refactor high-complexity functions to improve maintainability"
+  ]
+}
