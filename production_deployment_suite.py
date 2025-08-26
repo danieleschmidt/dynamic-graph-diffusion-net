@@ -1,27 +1,16 @@
 #!/usr/bin/env python3
 """
-Production Deployment Suite for DGDN
-
-Complete production deployment preparation including containerization,
-monitoring, health checks, and deployment verification.
+DGDN Production Deployment Suite
 """
 
-import sys
 import os
 import json
-import subprocess
-import shutil
+import time
+import logging
 from pathlib import Path
-from typing import Dict, Any, List
-from datetime import datetime
-import torch
-import yaml
 
-# Add src to path for imports
-sys.path.insert(0, 'src')
-
-import dgdn
-from dgdn import DynamicGraphDiffusionNet, TemporalData
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class ProductionDeployment:
