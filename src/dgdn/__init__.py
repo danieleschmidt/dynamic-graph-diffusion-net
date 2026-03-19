@@ -1,56 +1,20 @@
-"""Dynamic Graph Diffusion Net (DGDN) - PyTorch Implementation.
+"""Dynamic Graph Diffusion Network (DGDN).
 
-A PyTorch library implementing the Dynamic Graph Diffusion Network architecture
-for temporal graph learning, as proposed in the ICLR 2025 paper.
+A neural network for learning on graphs that evolve over time.
+Core idea: represent temporal graph evolution as a sequence of snapshots,
+apply heat-diffusion-based message passing within each snapshot, then
+attend over the temporal sequence to capture how node roles change.
 """
 
-__version__ = "0.1.0"
-__author__ = "Daniel Schmidt"
-__email__ = "author@example.com"
-__license__ = "MIT"
-
-# Core model imports
-from .models import DynamicGraphDiffusionNet, DGDNLayer, MultiHeadTemporalAttention
-
-# Data handling imports
-from .data import TemporalData, TemporalDataset, TemporalGraphDataset, TemporalDataLoader
-
-# Temporal processing imports
-from .temporal import EdgeTimeEncoder, VariationalDiffusion
-
-# Training imports (optional - requires tensorboard)
-try:
-    from .training import DGDNTrainer, DGDNLoss, DGDNMetrics
-except ImportError as e:
-    # Training components not available without additional dependencies
-    DGDNTrainer = None
-    DGDNLoss = None 
-    DGDNMetrics = None
-
-# Global features - optional for basic functionality
-# from .i18n import get_translator, set_global_locale, DGDNTranslator
-# from .compliance import PrivacyManager, GDPRCompliance, CCPACompliance, PDPACompliance
-# from .deployment import RegionManager, DeploymentRegion
+from .temporal_graph import TemporalGraph, SyntheticTemporalGraph
+from .diffusion import GraphDiffusionLayer
+from .attention import TemporalAttention
+from .model import DynamicGraphDiffusionNet
 
 __all__ = [
-    "__version__",
-    "__author__",
-    "__email__",
-    "__license__",
-    # Core models
+    "TemporalGraph",
+    "SyntheticTemporalGraph",
+    "GraphDiffusionLayer",
+    "TemporalAttention",
     "DynamicGraphDiffusionNet",
-    "DGDNLayer", 
-    "MultiHeadTemporalAttention",
-    # Data structures
-    "TemporalData",
-    "TemporalDataset",
-    "TemporalGraphDataset", 
-    "TemporalDataLoader",
-    # Temporal processing
-    "EdgeTimeEncoder",
-    "VariationalDiffusion",
-    # Training (optional)
-    "DGDNTrainer",
-    "DGDNLoss", 
-    "DGDNMetrics",
 ]
